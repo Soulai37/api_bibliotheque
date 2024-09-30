@@ -15,3 +15,4 @@ Modèle Miro: https://miro.com/app/board/uXjVLdJEr-s=/?share_link_id=62685514013
 Abdelhamid Aziz et Soulaimane Manaf
 Le binôme Abdelhamid Aziz et Soulaimane Manaf pour la collection utilisateurs
 # License
+ API Bibliothèque © 2024 by Abdelhamid Aziz et Soulaimane Manaf is licensed under CC BY-NC-SA 4.0 
