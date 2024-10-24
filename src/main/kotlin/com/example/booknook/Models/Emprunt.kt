@@ -1,9 +1,9 @@
 package com.example.booknook
 
-import java.util.Date
+import java.time.LocalDate
 
 data class Emprunt(val id: Int,
                    val livre: Livres,
                    val utilisateur: Utilisateurs,
-                   val date_emprunt: Date,
-                   val date_retour: Date)
+                   val date_emprunt: LocalDate,
+                   val date_retour: LocalDate)
