@@ -23,20 +23,14 @@ class LivreController{
     )
 
     @GetMapping(params=["nom"])
-    fun chercherLivres(@RequestParam nom: String)= listOf(
-        Livres("978-1234567890", "Les Misérables", "Victor Hugo", "Lutte contre l'injustice", "Édition spéciale", 5),
-        Livres("978-0987654321", "Pierre et Jean", "Guy de Maupassant", "Dilemme familial", "Édition classique", 3),
-        Livres("978-1122334455", "1984", "George Orwell", "Totalitarisme et surveillance", "Édition moderne", 10),
-        Livres("978-2233445566", "Le Libraire", "Gérard Bessette", "Quête identitaire", "Édition québécoise", 4)
-        ).filter { it.nom.equals(nom, ignoreCase = true) }
+    fun chercherLivres(@RequestParam nom: String)= 
+        Livres("978-1234567890", nom, "Victor Hugo", "Lutte contre l'injustice", "Édition spéciale", 5)
+        
 
     @GetMapping("/{isbn}")
-    fun obtenirLivresParISBN(@PathVariable isbn: String) = listOf(
-    Livres("978-1234567890", "Les Misérables", "Victor Hugo", "Lutte contre l'injustice", "Édition spéciale", 5),
-    Livres("978-0987654321", "Pierre et Jean", "Guy de Maupassant", "Dilemme familial", "Édition classique", 3),
-    Livres("978-1122334455", "1984", "George Orwell", "Totalitarisme et surveillance", "Édition moderne", 10),
-    Livres("978-2233445566", "Le Libraire", "Gérard Bessette", "Quête identitaire", "Édition québécoise", 4)
-    ).filter { it.isbn.equals(isbn, ignoreCase = true) }
+    fun obtenirLivresParISBN(@PathVariable isbn: String) = 
+    Livres(isbn, "Les Misérables", "Victor Hugo", "Lutte contre l'injustice", "Édition spéciale", 5)
+    
     
     @PostMapping
     fun creerLivres(@RequestBody livre: Livres): ResponseEntity<Livres> = ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
