@@ -18,18 +18,18 @@ import java.time.LocalDate
 class EmpruntController{
     @GetMapping
     fun obtenirEmprunts()=listOf(
-        Emprunt(1, Livres("978-1234567890", "Les Misérables", "Victor Hugo", 5), Utilisateurs(1, "Alice Dupont", false), LocalDate.of(2024, 1, 10), LocalDate.of(2024,2,10)),
-        Emprunt(2, Livres("978-0987654321", "Pierre et Jean", "Guy de Maupassant", 3), Utilisateurs(2, "Jean Martin", false), LocalDate.of(2024,3,12), LocalDate.of(2024,4,12)),
-        Emprunt(3, Livres("978-1122334455", "1984", "George Orwell", 10), Utilisateurs(3, "Sophie Bernard", false), LocalDate.of(2024,5,15), LocalDate.of(2024,6,15)),
-        Emprunt(4, Livres("978-2233445566", "Le Librarire", "Gérard Bessette", 4), Utilisateurs(4, "David Leroy", true), LocalDate.of(2024,7,20), LocalDate.of(2024,8,20))             
+        Emprunt(1, Livres("978-1234567890", "Les Misérables", "Victor Hugo","Résumé","Poche", 5), Utilisateurs(1, "Alice Dupont", false), LocalDate.of(2024, 1, 10), LocalDate.of(2024,2,10)),
+        Emprunt(2, Livres("978-0987654321", "Pierre et Jean", "Guy de Maupassant","Résumé","Poche", 3), Utilisateurs(2, "Jean Martin", false), LocalDate.of(2024,3,12), LocalDate.of(2024,4,12)),
+        Emprunt(3, Livres("978-1122334455", "1984", "George Orwell","Résumé","Poche", 10), Utilisateurs(3, "Sophie Bernard", false), LocalDate.of(2024,5,15), LocalDate.of(2024,6,15)),
+        Emprunt(4, Livres("978-2233445566", "Le Librarire", "Gérard Bessette","Résumé","Poche", 4), Utilisateurs(4, "David Leroy", true), LocalDate.of(2024,7,20), LocalDate.of(2024,8,20))             
     )
     @GetMapping("/{id}")
     fun chercherEmpruntsParId(@PathVariable id: Int)= listOf(
-        Emprunt(id, Livres("978-1234567890", "Les Misérables", "Victor Hugo", 5), Utilisateurs(1, "Alice Dupont", false), LocalDate.of(2024, 1, 10), LocalDate.of(2024,2,10))   
+        Emprunt(id, Livres("978-1234567890", "Les Misérables", "Victor Hugo","Résumé","Poche", 5), Utilisateurs(1, "Alice Dupont", false), LocalDate.of(2024, 1, 10), LocalDate.of(2024,2,10))   
     )
     @GetMapping(params=["nom"])
     fun chercherEmpruntsParNom(@RequestParam nom: String)= listOf(
-        Emprunt(4, Livres("978-2233445566", "Le Librarire", "Gérard Bessette", 4), Utilisateurs(4, nom, true), LocalDate.of(2024,7,20), LocalDate.of(2024,8,20))
+        Emprunt(4, Livres("978-2233445566", "Le Librarire", "Gérard Bessette","Résumé","Poche", 4), Utilisateurs(4, nom, true), LocalDate.of(2024,7,20), LocalDate.of(2024,8,20))
     )
     @PostMapping
     fun creerEmprunt(@RequestBody emprunt: Emprunt): ResponseEntity<Emprunt> = ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
