@@ -3,10 +3,10 @@ INSERT INTO utilisateur (id, nom, type) VALUES (2, 'Jean Martin', FALSE);
 INSERT INTO utilisateur (id, nom, type) VALUES (3, 'Sophie Bernard', FALSE);
 INSERT INTO utilisateur (id, nom, type) VALUES (4, 'David Leroy', TRUE);
 
-INSERT INTO livre (isbn, nom, auteur, quantite) VALUES ('978-1234567890', 'Les Misérables', 'Victor Hugo', 5);
-INSERT INTO livre (isbn, nom, auteur, quantite) VALUES ('978-0987654321', 'Pierre et Jean', 'Guy de Maupassant', 3);
-INSERT INTO livre (isbn, nom, auteur, quantite) VALUES ('978-1122334455', '1984', 'George Orwell', 10);
-INSERT INTO livre (isbn, nom, auteur, quantite) VALUES ('978-2233445566', 'Le Librarire', 'Gérard Bessette', 4);
+INSERT INTO livre (isbn, nom, auteur, resume, edition, quantite) VALUES ('978-1234567890', 'Les Misérables', 'Victor Hugo', 'Lutte contre l'injustice', 'Édition spéciale', 5);
+INSERT INTO livre (isbn, nom, auteur, resume, edition, quantite) VALUES ('978-0987654321', 'Pierre et Jean', 'Guy de Maupassant', 'Dilemme familial', 'Édition classique', 3);
+INSERT INTO livre (isbn, nom, auteur, resume, edition, quantite) VALUES ('978-1122334455', '1984', 'George Orwell', 'Totalitarisme et surveillance', 'Édition moderne', 10);
+INSERT INTO livre (isbn, nom, auteur, resume, edition, quantite) VALUES ('978-2233445566', 'Le Libraire', 'Gérard Bessette', 'Quête identitaire', 'Édition québécoise', 4);
 
 INSERT INTO emprunt (id, isbn_livre, id_utilisateur, date_emprunt, date_retour) VALUES (1, '978-1234567890', 1, '2024-01-10', '2024-02-10');
 INSERT INTO emprunt (id, isbn_livre, id_utilisateur, date_emprunt, date_retour) VALUES (2, '978-0987654321', 2, '2024-03-12', '2024-04-12');
