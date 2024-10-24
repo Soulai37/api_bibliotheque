@@ -11,6 +11,8 @@ CREATE TABLE livre(
 	isbn varchar(50) PRIMARY KEY,
     nom varchar(100),
     auteur varchar(50),
+    resume text,
+    edition varchar(50),
     quantite INT DEFAULT 0
 );
 

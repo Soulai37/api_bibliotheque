@@ -1,7 +1,8 @@
-INSERT INTO utilisateur (id, nom, type) VALUES (1, 'Alice Dupont', FALSE);
-INSERT INTO utilisateur (id, nom, type) VALUES (2, 'Jean Martin', FALSE);
-INSERT INTO utilisateur (id, nom, type) VALUES (3, 'Sophie Bernard', FALSE);
-INSERT INTO utilisateur (id, nom, type) VALUES (4, 'David Leroy', TRUE);
+INSERT INTO utilisateur (id, nom, type) VALUES (2, 'Vincent', FALSE);
+INSERT INTO utilisateur (id, nom, type) VALUES (3, 'Marie', TRUE);
+INSERT INTO utilisateur (id, nom, type) VALUES (4, 'Luc', FALSE);
+INSERT INTO utilisateur (id, nom, type) VALUES (5, 'Sophie', TRUE);
+
 
 INSERT INTO livre (isbn, nom, auteur, resume, edition, quantite) VALUES ('978-1234567890', 'Les Misérables', 'Victor Hugo', 'Lutte contre l'injustice', 'Édition spéciale', 5);
 INSERT INTO livre (isbn, nom, auteur, resume, edition, quantite) VALUES ('978-0987654321', 'Pierre et Jean', 'Guy de Maupassant', 'Dilemme familial', 'Édition classique', 3);
