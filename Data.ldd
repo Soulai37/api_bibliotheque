@@ -1,29 +1,3 @@
-CREATE SCHEMA IF NOT EXISTS api_bibliotheque;
-USE api_bibliotheque;
-
-CREATE TABLE utilisateur(
-	id INT PRIMARY KEY,
-    nom VARCHAR(50) NOT NULL,
-    type BOOLEAN
-);
-
-CREATE TABLE livre(
-	isbn varchar(50) PRIMARY KEY,
-    nom varchar(100),
-    auteur varchar(50),
-    quantite INT DEFAULT 0
-);
-
-CREATE TABLE emprunt(
-	id INT PRIMARY KEY,
-    isbn_livre VARCHAR(50),
-    id_utilisateur INT,
-    date_emprunt DATE,
-    date_retour DATE,
-    FOREIGN KEY (isbn_livre) REFERENCES livre(isbn),
-    FOREIGN KEY (id_utilisateur) REFERENCES utilisateur(id)
-);
-
 INSERT INTO utilisateur (id, nom, type) VALUES (1, 'Alice Dupont', FALSE);
 INSERT INTO utilisateur (id, nom, type) VALUES (2, 'Jean Martin', FALSE);
 INSERT INTO utilisateur (id, nom, type) VALUES (3, 'Sophie Bernard', FALSE);
