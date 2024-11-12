@@ -35,8 +35,13 @@ class UtilisateurController (private val utilisateursService: UtilisateursServic
        
 
     @GetMapping("/{id}")
-    fun obtenirUtilisateurParId(@PathVariable id: Int): ResponseEntity<Utilisateurs> =
-        ResponseEntity.ok(utilisateursService.obtenirUtilisateurParId(id))
+    fun obtenirUtilisateurParId(@PathVariable id: Int): ResponseEntity<Utilisateurs> {
+        if(utilisateursService.obtenirUtilisateurParId(id)==null){
+            throw RessourceInexistanteException("L'utilisateur est inexistant dans le système")
+        }
+        return ResponseEntity.ok(utilisateursService.obtenirUtilisateurParId(id))
+            
+    }
     /*fun obtenirUtilisateurParID(@PathVariable id: Int) =
     Utilisateurs(id, "Vincent", false)*/
     
@@ -46,11 +51,19 @@ class UtilisateurController (private val utilisateursService: UtilisateursServic
         ResponseEntity.ok(utilisateursService.ajouterUtilisateur(utilisateur))
 
     @PutMapping("/{id}")
-    fun modifierUtilisateur(@PathVariable id: Int, @RequestBody utilisateur: Utilisateurs): ResponseEntity<Utilisateurs> = 
-        ResponseEntity.ok(utilisateursService.modifierUtilisateur(id, utilisateur))
+    fun modifierUtilisateur(@PathVariable id: Int, @RequestBody utilisateur: Utilisateurs): ResponseEntity<Utilisateurs> {
+        if(utilisateursService.obtenirUtilisateurParId(id)==null){
+            throw RessourceInexistanteException("L'utilisateur est inexistant dans le système")
+        }
+        return ResponseEntity.ok(utilisateursService.modifierUtilisateur(id, utilisateur))
+    }
+        
         
     @DeleteMapping("/{id}")
     fun supprimerUtilisateur(@PathVariable id: Int): ResponseEntity<Void> {
+        if(utilisateursService.obtenirUtilisateurParId(id)==null){
+            throw RessourceInexistanteException("L'utilisateur est inexistant dans le système")
+        }
         utilisateursService.supprimerUtilisateur(id)
         return ResponseEntity.noContent().build()
     }
