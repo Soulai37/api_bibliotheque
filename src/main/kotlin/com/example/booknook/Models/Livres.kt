@@ -6,5 +6,5 @@ data class Livres( val isbn: String?,
                   val resume : String,
                   val edition : String,
                   val quantite: Int,
-                  val genre: String
+                  //val genre: String
                   )

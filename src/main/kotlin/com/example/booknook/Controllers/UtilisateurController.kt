@@ -13,34 +13,45 @@ import org.springframework.http.ResponseEntity
 import org.springframework.http.HttpStatus
 
 @RestController
-@RequestMapping("/Utilisateurs")
-class UtilisateurController{
+@RequestMapping("/utilisateurs")
+class UtilisateurController (private val utilisateursService: UtilisateursService) {
     @GetMapping
-    fun obtenirUtilisateur()= listOf(
+    fun obtenirUtilisateurs(): ResponseEntity<List<Utilisateurs>> =
+        ResponseEntity.ok(utilisateursService.obtenirUtilisateurs())
+    /*fun obtenirUtilisateur()= listOf(
         Utilisateurs(2, "Vincent", false),
         Utilisateurs(3, "Marie", true),
         Utilisateurs(4, "Luc", false),
         Utilisateurs(5, "Sophie", true),
 
 
-    )
+    )*/
 
     @GetMapping(params=["nom"])
-    fun chercherUtilisateur(@RequestParam nom: String) =
-    Utilisateurs(2, nom, false)
+    fun obtenirUtilisateurParNom(@RequestParam nom: String): ResponseEntity<Utilisateurs> =
+        ResponseEntity.ok(utilisateursService.obtenirUtilisateurParNom(nom))
+    /*fun chercherUtilisateur(@RequestParam nom: String) =
+    Utilisateurs(2, nom, false)*/
        
 
     @GetMapping("/{id}")
-    fun obtenirUtilisateurParID(@PathVariable id: Int) =
-    Utilisateurs(id, "Vincent", false)
+    fun obtenirUtilisateurParId(@PathVariable id: Int): ResponseEntity<Utilisateurs> =
+        ResponseEntity.ok(utilisateursService.obtenirUtilisateurParId(id))
+    /*fun obtenirUtilisateurParID(@PathVariable id: Int) =
+    Utilisateurs(id, "Vincent", false)*/
     
     
     @PostMapping
-    fun creerUtilisateur(@RequestBody utilisateur: Utilisateurs): ResponseEntity<Utilisateurs> = ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
+    fun creerUtilisateur(@RequestBody utilisateur: Utilisateurs): ResponseEntity<Utilisateurs> = 
+        ResponseEntity.ok(utilisateursService.ajouterUtilisateur(utilisateur))
 
     @PutMapping("/{id}")
-    fun modifierUtilisateur(@RequestBody utilisateur: Utilisateurs): ResponseEntity<Utilisateurs> = ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
-
+    fun modifierUtilisateur(@PathVariable id: Int, @RequestBody utilisateur: Utilisateurs): ResponseEntity<Utilisateurs> = 
+        ResponseEntity.ok(utilisateursService.modifierUtilisateur(id, utilisateur))
+        
     @DeleteMapping("/{id}")
-    fun supprimerUtilisateur(@RequestBody utilisateur: Utilisateurs): ResponseEntity<Utilisateurs> = ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
+    fun supprimerUtilisateur(@PathVariable id: Int): ResponseEntity<Void> {
+        utilisateursService.supprimerUtilisateur(id)
+        return ResponseEntity.noContent().build()
+    }
 }
