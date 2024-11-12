@@ -15,26 +15,43 @@ import java.time.LocalDate
 
 @RestController
 @RequestMapping("/emprunts")
-class EmpruntController{
+class EmpruntController (private val empruntService: EmpruntService){
     @GetMapping
-    fun obtenirEmprunts()=listOf(
-        Emprunt(1, Livres("978-1234567890", "Les Misérables", "Victor Hugo","Résumé","Poche", 5), Utilisateurs(1, "Alice Dupont", false), LocalDate.of(2024, 1, 10), LocalDate.of(2024,2,10)),
-        Emprunt(2, Livres("978-0987654321", "Pierre et Jean", "Guy de Maupassant","Résumé","Poche", 3), Utilisateurs(2, "Jean Martin", false), LocalDate.of(2024,3,12), LocalDate.of(2024,4,12)),
-        Emprunt(3, Livres("978-1122334455", "1984", "George Orwell","Résumé","Poche", 10), Utilisateurs(3, "Sophie Bernard", false), LocalDate.of(2024,5,15), LocalDate.of(2024,6,15)),
-        Emprunt(4, Livres("978-2233445566", "Le Librarire", "Gérard Bessette","Résumé","Poche", 4), Utilisateurs(4, "David Leroy", true), LocalDate.of(2024,7,20), LocalDate.of(2024,8,20))             
-    )
+    fun obtenirEmprunts():ResponseEntity<List<Emprunt>> =
+        ResponseEntity.ok(empruntService.obtenirEmprunts())
+
     @GetMapping("/{id}")
-    fun chercherEmpruntsParId(@PathVariable id: Int)= listOf(
-        Emprunt(id, Livres("978-1234567890", "Les Misérables", "Victor Hugo","Résumé","Poche", 5), Utilisateurs(1, "Alice Dupont", false), LocalDate.of(2024, 1, 10), LocalDate.of(2024,2,10))   
-    )
-    @GetMapping(params=["nom"])
-    fun chercherEmpruntsParNom(@RequestParam nom: String)= listOf(
-        Emprunt(4, Livres("978-2233445566", "Le Librarire", "Gérard Bessette","Résumé","Poche", 4), Utilisateurs(4, nom, true), LocalDate.of(2024,7,20), LocalDate.of(2024,8,20))
-    )
+    fun chercherEmpruntsParId(@PathVariable id: Int): ResponseEntity<Emprunt>{
+        if(empruntService.obtenirEmpruntParId(id)==null){
+            throw RessourceInexistanteException("L'emprunt est inexistant dans le système")
+        }
+        return ResponseEntity.ok(empruntService.obtenirEmpruntParId(id))
+    }
+    @GetMapping(params=["nomLivre"])
+    fun obtenirEmpruntParNomLivre(@RequestParam nomLivre: String): ResponseEntity<Emprunt> =
+        ResponseEntity.ok(empruntService.obtenirEmpruntParNomLivre(nomLivre))
+
+    @GetMapping(params=["nomUtilisateur"])
+    fun obtenirEmpruntsParNomUtilisateur(@RequestParam nomUtilisateur: String):ResponseEntity<List<Emprunt>> =
+        ResponseEntity.ok(empruntService.obtenirEmpruntParNomUtilisateur(nomUtilisateur))
+
     @PostMapping
-    fun creerEmprunt(@RequestBody emprunt: Emprunt): ResponseEntity<Emprunt> = ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
+    fun creerEmprunt(@RequestBody emprunt: Emprunt): ResponseEntity<Emprunt> = 
+        ResponseEntity.ok(empruntService.ajouterEmprunt(emprunt))
+
     @PutMapping("/{id}")
-    fun modifierEmprunt(@RequestBody emprunt: Emprunt): ResponseEntity<Emprunt> = ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
+    fun modifierEmprunt(@PathVariable id: Int, @RequestBody emprunt: Emprunt): ResponseEntity<Emprunt> {
+        if(empruntService.obtenirEmpruntParId(id)==null){
+            throw RessourceInexistanteException("L'emprunt est inexistant dans le système")
+        }
+        return ResponseEntity.ok(empruntService.modifierEmprunt(id, emprunt))
+    }
     @DeleteMapping("/{id}")
-    fun supprimerEmprunt(@RequestBody emprunt: Emprunt): ResponseEntity<Emprunt> = ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
+    fun supprimerUtilisateur(@PathVariable id: Int): ResponseEntity<Void> {
+        if(empruntService.obtenirEmpruntParId(id)==null){
+            throw RessourceInexistanteException("L'emprunt est inexistant dans le système")
+        }
+        empruntService.supprimerEmprunt(id)
+        return ResponseEntity.noContent().build()
+    }
 }
