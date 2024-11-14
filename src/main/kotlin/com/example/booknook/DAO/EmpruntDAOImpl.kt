@@ -1,15 +1,15 @@
 package com.example.booknook
-
+ 
 import org.springframework.stereotype.Repository
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.jdbc.core.query
 @Repository
 class EmpruntDAOImpl(private val db: JdbcTemplate): EmpruntDAO{
-    
+   
     override fun chercherTous(): List<Emprunt> = db.query("""
     SELECT e.id, e.isbn_livre, e.id_utilisateur, e.date_emprunt, e.date_retour,
             l.isbn, l.nom, l.auteur, l.resume, l.auteur, l.edition, l.genre, l.quantite,
-            u.id, u.nom, u.type 
+            u.id, u.nom, u.type
             FROM emprunt e JOIN livre l on e.isbn_livre=l.isbn
             JOIN utilisateur u ON e.id_utilisateur=u.id
     """) { reponse, _ ->
@@ -22,7 +22,7 @@ class EmpruntDAOImpl(private val db: JdbcTemplate): EmpruntDAO{
         db.query("""
             SELECT e.id, e.isbn_livre, e.id_utilisateur, e.date_emprunt, e.date_retour,
             l.isbn, l.nom, l.auteur, l.resume, l.auteur, l.edition, l.genre, l.quantite,
-            u.id, u.nom, u.type 
+            u.id, u.nom, u.type
             FROM emprunt e JOIN livre l on e.isbn_livre=l.isbn
             JOIN utilisateur u ON e.id_utilisateur=u.id
             where e.id=?
@@ -32,13 +32,13 @@ class EmpruntDAOImpl(private val db: JdbcTemplate): EmpruntDAO{
             emprunt=Emprunt(reponse.getInt("id"), livre, utilisateur, reponse.getDate("date_emprunt").toLocalDate(), reponse.getDate("date_retour").toLocalDate())
         }
         return emprunt
-    } 
+    }
     override fun chercherParNom(nom: String): Emprunt? {
         var emprunt:Emprunt?=null
         db.query("""
             SELECT e.id, e.isbn_livre, e.id_utilisateur, e.date_emprunt, e.date_retour,
             l.isbn, l.nom, l.auteur, l.resume, l.auteur, l.edition, l.genre, l.quantite,
-            u.id, u.nom, u.type 
+            u.id, u.nom, u.type
             FROM emprunt e JOIN livre l on e.isbn_livre=l.isbn
             JOIN utilisateur u ON e.id_utilisateur=u.id
             WHERE l.nom LIKE ?
@@ -52,7 +52,7 @@ class EmpruntDAOImpl(private val db: JdbcTemplate): EmpruntDAO{
     override fun chercherParNomUtilisateur(nom: String): List<Emprunt> = db.query("""
         SELECT e.id, e.isbn_livre, e.id_utilisateur, e.date_emprunt, e.date_retour,
                 l.isbn, l.nom, l.auteur, l.resume, l.auteur, l.edition, l.genre, l.quantite,
-                u.id, u.nom, u.type 
+                u.id, u.nom, u.type
                 FROM emprunt e JOIN livre l on e.isbn_livre=l.isbn
                 JOIN utilisateur u ON e.id_utilisateur=u.id
                 WHERE u.nom LIKE ?
