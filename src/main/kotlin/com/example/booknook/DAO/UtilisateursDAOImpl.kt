@@ -8,20 +8,50 @@ import com.example.booknook.Utilisateurs
 @Repository
 class UtilisateursDAOImpl(private val db: JdbcTemplate): UtilisateursDAO{
 
-    override fun chercherTous(): List<Utilisateurs> = db.query("SELECT * FROM utilisateur") { reponse, _ ->
-        Utilisateurs(reponse.getInt("id"), reponse.getString("nom"), reponse.getBoolean("type"))
+    override fun chercherTous(): List<Utilisateurs> {
+        var listeUtilisateurs =ArrayList<Utilisateurs> ()
+        db.query("select * from utilisateur") { utilReponse, _ ->
+            val id=utilReponse.getInt("id")
+            val nom=utilReponse.getString("nom")
+            val type=utilReponse.getBoolean("type")
+            val listeLivres = ArrayList<Livres>()
+            db.query("""SELECT livre.isbn, livre.nom, livre.auteur, livre.resume, livre.edition, livre.genre, livre.quantite
+                        FROM livre
+                        INNER JOIN utilisateur_livresFavoris ON livre.isbn = utilisateur_livresFavoris.isbn_livre
+                        WHERE utilisateur_livresFavoris.id_utilisateur = ?""", arrayOf(id)){ livreReponse, _ ->
+                            listeLivres.add(Livres(livreReponse.getString("isbn"), livreReponse.getString("nom"), livreReponse.getString("auteur"), livreReponse.getString("resume"), livreReponse.getString("edition"), livreReponse.getString("genre"), livreReponse.getInt("quantite")))
+                        }
+            var utilisateur=Utilisateurs(id, nom, type, listeLivres)
+            listeUtilisateurs.add(utilisateur)
+        }
+        return listeUtilisateurs
     }
     override fun chercherParId(id: Int): Utilisateurs? {
         var utilisateur:Utilisateurs?=null
+        val listeLivres = ArrayList<Livres>()
         db.query("SELECT * FROM utilisateur WHERE id = ?", id){ reponse, _ ->
-            utilisateur=Utilisateurs(reponse.getInt("id"), reponse.getString("nom"), reponse.getBoolean("type"))
+            db.query("""SELECT livre.isbn, livre.nom, livre.auteur, livre.resume, livre.edition, livre.genre, livre.quantite
+                        FROM livre
+                        INNER JOIN utilisateur_livresFavoris ON livre.isbn = utilisateur_livresFavoris.isbn_livre
+                        WHERE utilisateur_livresFavoris.id_utilisateur = ?""", arrayOf(id)){ livreReponse, _ ->
+                            listeLivres.add(Livres(livreReponse.getString("isbn"), livreReponse.getString("nom"), livreReponse.getString("auteur"), livreReponse.getString("resume"), livreReponse.getString("edition"), livreReponse.getString("genre"), livreReponse.getInt("quantite")))
+                        }   
+            utilisateur=Utilisateurs(reponse.getInt("id"), reponse.getString("nom"), reponse.getBoolean("type"), listeLivres)
         }
         return utilisateur
     }
     override fun chercherParNom(nom: String): Utilisateurs? {
         var utilisateur:Utilisateurs?=null
+        val listeLivres = ArrayList<Livres>()
         db.query("SELECT * FROM utilisateur WHERE nom LIKE ?", nom){ reponse, _ ->
-            utilisateur=Utilisateurs(reponse.getInt("id"), reponse.getString("nom"), reponse.getBoolean("type"))
+            val id=reponse.getInt("id")
+            db.query("""SELECT livre.isbn, livre.nom, livre.auteur, livre.resume, livre.edition, livre.genre, livre.quantite
+                        FROM livre
+                        INNER JOIN utilisateur_livresFavoris ON livre.isbn = utilisateur_livresFavoris.isbn_livre
+                        WHERE utilisateur_livresFavoris.id_utilisateur = ?""", arrayOf(id)){ livreReponse, _ ->
+                            listeLivres.add(Livres(livreReponse.getString("isbn"), livreReponse.getString("nom"), livreReponse.getString("auteur"), livreReponse.getString("resume"), livreReponse.getString("edition"), livreReponse.getString("genre"), livreReponse.getInt("quantite")))
+                        }     
+            utilisateur=Utilisateurs(reponse.getInt("id"), reponse.getString("nom"), reponse.getBoolean("type"), listeLivres)
         }
         return utilisateur
     }
@@ -32,8 +62,8 @@ class UtilisateursDAOImpl(private val db: JdbcTemplate): UtilisateursDAO{
         return utilisateur
     }
     override fun modifier(id: Int, utilisateur: Utilisateurs): Utilisateurs? {
-        val query = "UPDATE utilisateur SET nom=?, type=? WHERE id=?"
-        db.update(query, utilisateur.nom, utilisateur.type, id)
+        val queryUtilisateur = "UPDATE utilisateur SET nom=?, type=? WHERE id=?"
+        db.update(queryUtilisateur, utilisateur.nom, utilisateur.type, id)
         return utilisateur
     }
     override fun effacer(id: Int) {
