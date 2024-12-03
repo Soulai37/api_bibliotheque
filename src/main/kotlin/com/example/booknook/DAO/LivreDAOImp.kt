@@ -8,7 +8,7 @@ import com.example.booknook.Livres
 @Repository
 class LivreDAOImp(private val bd: JdbcTemplate): LivreDAO {
     
-    override fun chercherTous(): List<Livres> = bd.query("SELECT isbn, nom, auteur, resume, edition, quantite, genre FROM livre") { réponse, _ ->
+    override fun chercherTous(): List<Livres> = bd.query("SELECT isbn, nom, auteur, resume, edition, quantite, genre, image FROM livre") { réponse, _ ->
         Livres(
             réponse.getString("isbn"),
             réponse.getString("nom"),
@@ -16,7 +16,8 @@ class LivreDAOImp(private val bd: JdbcTemplate): LivreDAO {
             réponse.getString("resume"),
             réponse.getString("edition"),
             réponse.getString("genre"),
-            réponse.getInt("quantite")
+            réponse.getInt("quantite"),
+            réponse.getString("image")
         )
     }
 
@@ -29,7 +30,8 @@ class LivreDAOImp(private val bd: JdbcTemplate): LivreDAO {
             réponse.getString("resume"),
             réponse.getString("edition"),
             réponse.getString("genre"),
-            réponse.getInt("quantite")
+            réponse.getInt("quantite"),
+            réponse.getString("image")
         )}
         return livres
     }
@@ -43,6 +45,7 @@ class LivreDAOImp(private val bd: JdbcTemplate): LivreDAO {
             réponse.getString("edition"),
             réponse.getString("genre"),
             réponse.getInt("quantite"),
+            réponse.getString("image")
         )}
         return livres
     }
@@ -55,13 +58,14 @@ class LivreDAOImp(private val bd: JdbcTemplate): LivreDAO {
             réponse.getString("resume"),
             réponse.getString("edition"),
             réponse.getString("genre"),
-            réponse.getInt("quantite")
+            réponse.getInt("quantite"),
+            réponse.getString("image")
         )}
         return livres
     }
 
     override fun ajouter(livres: Livres): Livres? {  
-        bd.query("INSERT INTO livre(isbn, nom, auteur, resume, edition, quantite, genre) VALUES (?, ?, ?, ? ,? ,?, ?)", livres.isbn, livres.nom, livres.auteur, livres.resume, livres.edition, livres.quantite, livres.genre) { réponse, _ ->
+        bd.query("INSERT INTO livre(isbn, nom, auteur, resume, edition, quantite, genre, image) VALUES (?, ?, ?, ? ,? ,?, ?,?)", livres.isbn, livres.nom, livres.auteur, livres.resume, livres.edition, livres.quantite, livres.genre) { réponse, _ ->
         Livres(
             réponse.getString("isbn"),
             réponse.getString("nom"),
@@ -69,14 +73,15 @@ class LivreDAOImp(private val bd: JdbcTemplate): LivreDAO {
             réponse.getString("resume"),
             réponse.getString("edition"),
             réponse.getString("genre"),
-            réponse.getInt("quantite")
+            réponse.getInt("quantite"),
+            réponse.getString("image")
         )}
         return livres
     }
 
     override fun modifierL(isbn:String, livres: Livres): Livres? {
-        val query = "UPDATE livre SET nom=?, auteur=?, resume=?, edition=?, quantite=?, genre=? WHERE isbn=?"
-        bd.update(query, livres.nom, livres.auteur, livres.resume, livres.edition, livres.quantite, livres.genre, isbn)
+        val query = "UPDATE livre SET nom=?, auteur=?, resume=?, edition=?, quantite=?, genre=?, image=? WHERE isbn=?"
+        bd.update(query, livres.nom, livres.auteur, livres.resume, livres.edition, livres.quantite, livres.genre, livres.image, isbn)
        
         return livres
     }
@@ -90,7 +95,8 @@ class LivreDAOImp(private val bd: JdbcTemplate): LivreDAO {
                 réponse.getString("resume"),
                 réponse.getString("edition"),
                 réponse.getString("genre"),
-                réponse.getInt("quantite")
+                réponse.getInt("quantite"),
+                réponse.getString("image")
             )}
     }
 

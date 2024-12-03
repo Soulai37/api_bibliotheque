@@ -15,11 +15,11 @@ class UtilisateursDAOImpl(private val db: JdbcTemplate): UtilisateursDAO{
             val nom=utilReponse.getString("nom")
             val type=utilReponse.getBoolean("type")
             val listeLivres = ArrayList<Livres>()
-            db.query("""SELECT livre.isbn, livre.nom, livre.auteur, livre.resume, livre.edition, livre.genre, livre.quantite
+            db.query("""SELECT livre.isbn, livre.nom, livre.auteur, livre.resume, livre.edition, livre.genre, livre.quantite, livre.image
                         FROM livre
                         INNER JOIN utilisateur_livresFavoris ON livre.isbn = utilisateur_livresFavoris.isbn_livre
                         WHERE utilisateur_livresFavoris.id_utilisateur = ?""", arrayOf(id)){ livreReponse, _ ->
-                            listeLivres.add(Livres(livreReponse.getString("isbn"), livreReponse.getString("nom"), livreReponse.getString("auteur"), livreReponse.getString("resume"), livreReponse.getString("edition"), livreReponse.getString("genre"), livreReponse.getInt("quantite")))
+                            listeLivres.add(Livres(livreReponse.getString("isbn"), livreReponse.getString("nom"), livreReponse.getString("auteur"), livreReponse.getString("resume"), livreReponse.getString("edition"), livreReponse.getString("genre"), livreReponse.getInt("quantite"), livreReponse.getString("image")))
                         }
             var utilisateur=Utilisateurs(id, nom, type, listeLivres)
             listeUtilisateurs.add(utilisateur)
@@ -30,11 +30,11 @@ class UtilisateursDAOImpl(private val db: JdbcTemplate): UtilisateursDAO{
         var utilisateur:Utilisateurs?=null
         val listeLivres = ArrayList<Livres>()
         db.query("SELECT * FROM utilisateur WHERE id = ?", id){ reponse, _ ->
-            db.query("""SELECT livre.isbn, livre.nom, livre.auteur, livre.resume, livre.edition, livre.genre, livre.quantite
+            db.query("""SELECT livre.isbn, livre.nom, livre.auteur, livre.resume, livre.edition, livre.genre, livre.quantite, livre.image
                         FROM livre
                         INNER JOIN utilisateur_livresFavoris ON livre.isbn = utilisateur_livresFavoris.isbn_livre
                         WHERE utilisateur_livresFavoris.id_utilisateur = ?""", arrayOf(id)){ livreReponse, _ ->
-                            listeLivres.add(Livres(livreReponse.getString("isbn"), livreReponse.getString("nom"), livreReponse.getString("auteur"), livreReponse.getString("resume"), livreReponse.getString("edition"), livreReponse.getString("genre"), livreReponse.getInt("quantite")))
+                            listeLivres.add(Livres(livreReponse.getString("isbn"), livreReponse.getString("nom"), livreReponse.getString("auteur"), livreReponse.getString("resume"), livreReponse.getString("edition"), livreReponse.getString("genre"), livreReponse.getInt("quantite"), livreReponse.getString("image")))
                         }   
             utilisateur=Utilisateurs(reponse.getInt("id"), reponse.getString("nom"), reponse.getBoolean("type"), listeLivres)
         }
@@ -45,11 +45,11 @@ class UtilisateursDAOImpl(private val db: JdbcTemplate): UtilisateursDAO{
         val listeLivres = ArrayList<Livres>()
         db.query("SELECT * FROM utilisateur WHERE nom LIKE ?", nom){ reponse, _ ->
             val id=reponse.getInt("id")
-            db.query("""SELECT livre.isbn, livre.nom, livre.auteur, livre.resume, livre.edition, livre.genre, livre.quantite
+            db.query("""SELECT livre.isbn, livre.nom, livre.auteur, livre.resume, livre.edition, livre.genre, livre.quantite, livre.image
                         FROM livre
                         INNER JOIN utilisateur_livresFavoris ON livre.isbn = utilisateur_livresFavoris.isbn_livre
                         WHERE utilisateur_livresFavoris.id_utilisateur = ?""", arrayOf(id)){ livreReponse, _ ->
-                            listeLivres.add(Livres(livreReponse.getString("isbn"), livreReponse.getString("nom"), livreReponse.getString("auteur"), livreReponse.getString("resume"), livreReponse.getString("edition"), livreReponse.getString("genre"), livreReponse.getInt("quantite")))
+                            listeLivres.add(Livres(livreReponse.getString("isbn"), livreReponse.getString("nom"), livreReponse.getString("auteur"), livreReponse.getString("resume"), livreReponse.getString("edition"), livreReponse.getString("genre"), livreReponse.getInt("quantite"), livreReponse.getString("image")))
                         }     
             utilisateur=Utilisateurs(reponse.getInt("id"), reponse.getString("nom"), reponse.getBoolean("type"), listeLivres)
         }
