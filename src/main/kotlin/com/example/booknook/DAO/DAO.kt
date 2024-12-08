@@ -1,9 +1,10 @@
 package com.example.booknook
-interface DAO<T> {
+interface DAO<T, ID> {
     fun chercherTous(): List<T>
-    fun chercherParId(id: Int): T?
+    fun chercherParId(id: ID): T?
     fun chercherParNom(nom: String): T?
     fun ajouter(element: T): T?
-    fun modifier(id: Int, element: T): T?
-    fun effacer(id: Int)
+    fun modifier(id: ID, element: T): T?
+    fun effacer(id: ID)
+
 }

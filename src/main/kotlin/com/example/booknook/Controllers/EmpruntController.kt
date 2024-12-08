@@ -22,9 +22,6 @@ class EmpruntController (private val empruntService: EmpruntService){
 
     @GetMapping("/{id}")
     fun chercherEmpruntsParId(@PathVariable id: Int): ResponseEntity<Emprunt>{
-        if(empruntService.obtenirEmpruntParId(id)==null){
-            throw RessourceInexistanteException("L'emprunt est inexistant dans le système")
-        }
         return ResponseEntity.ok(empruntService.obtenirEmpruntParId(id))
     }
     @GetMapping(params=["nomLivre"])
@@ -41,16 +38,10 @@ class EmpruntController (private val empruntService: EmpruntService){
 
     @PutMapping("/{id}")
     fun modifierEmprunt(@PathVariable id: Int, @RequestBody emprunt: Emprunt): ResponseEntity<Emprunt> {
-        if(empruntService.obtenirEmpruntParId(id)==null){
-            throw RessourceInexistanteException("L'emprunt est inexistant dans le système")
-        }
         return ResponseEntity.ok(empruntService.modifierEmprunt(id, emprunt))
     }
     @DeleteMapping("/{id}")
     fun supprimerUtilisateur(@PathVariable id: Int): ResponseEntity<Void> {
-        if(empruntService.obtenirEmpruntParId(id)==null){
-            throw RessourceInexistanteException("L'emprunt est inexistant dans le système")
-        }
         empruntService.supprimerEmprunt(id)
         return ResponseEntity.noContent().build()
     }

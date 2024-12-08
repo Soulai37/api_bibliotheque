@@ -5,32 +5,34 @@ import com.example.booknook.LivreDAO
 @Service
 class LivreService(private val livreDAO: LivreDAOImp){
     fun obtenirLivres(): List<Livres> = livreDAO.chercherTous()
-    fun obtenirLivreParIsbn(isbn: String): Livres? {
+    fun verificationISBN(isbn:String): Boolean{
         if(!isbn.startsWith("ISBN") || isbn.length != 8 || !isbn.substring(4).all { it.isDigit() }){
             throw RequeteMalFormuleeException("L'isbn $isbn n'est pas dans un format valide.")
         }
-        return livreDAO.chercherParIsbn(isbn)
+        return true
+    }
+    fun obtenirLivreParIsbn(isbn: String): Livres? {
+        verificationISBN(isbn) 
+        return livreDAO.chercherParId(isbn) ?: throw RessourceInexistanteException("Le livre  est inexistant dans le système")
     }
     fun obtenirLivreParNom(nom: String): Livres?=livreDAO.chercherParNom(nom)
     fun obtenirLivreParGenre(genre: String): Livres?=livreDAO.chercherParGenre(genre)
-    fun ajouterLivre(isbn:String, livres: Livres): Livres?{
-        if(!isbn.startsWith("ISBN") || isbn.length != 8 || !isbn.substring(4).all { it.isDigit() }){
-        throw RequeteMalFormuleeException("L'isbn $isbn n'est pas dans un format valide.")
-            }
-        return  livreDAO.ajouter(livres)
+    fun ajouterLivre(livres: Livres): Livres?{
+        val isbn = livres.isbn
+        verificationISBN(isbn)
+        return  livreDAO.ajouter(livres) 
+        
     }
 
     fun modifierLivres(isbn: String, livres: Livres): Livres?{
-        if(!isbn.startsWith("ISBN") || isbn.length != 8 || !isbn.substring(4).all { it.isDigit() }){
-            throw RequeteMalFormuleeException("L'isbn $isbn n'est pas dans un format valide.")
-        }
-        return livreDAO.modifierL(isbn, livres)
+        verificationISBN(isbn)
+        val isbn2 = livres.isbn
+        verificationISBN(isbn2)
+        return livreDAO.modifier(isbn, livres) ?: throw RessourceInexistanteException("Le livre  est inexistant dans le système")
     }
 
     fun supprimerLivres(isbn: String){
-        if(!isbn.startsWith("ISBN") || isbn.length != 8 || !isbn.substring(4).all { it.isDigit() }){
-            throw RequeteMalFormuleeException("L'isbn $isbn n'est pas dans un format valide.")
-        }
-        return livreDAO.effacerL(isbn)
+        verificationISBN(isbn)
+        return livreDAO.effacer(isbn) ?: throw RessourceInexistanteException("Le livre  est inexistant dans le système")
     }
 }

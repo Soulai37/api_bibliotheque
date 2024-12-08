@@ -1,6 +1,6 @@
 package com.example.booknook
 
-interface UtilisateursDAO: DAO<Utilisateurs>{
+interface UtilisateursDAO: DAO<Utilisateurs, Int>{
     override fun chercherTous():List<Utilisateurs>
     override fun chercherParId(id: Int): Utilisateurs?
     override fun chercherParNom(nom: String): Utilisateurs?

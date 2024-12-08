@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.http.ResponseEntity
 import org.springframework.http.HttpStatus
-import org.springframework.security.access.prepost.PreAuthorize
+//import org.springframework.security.access.prepost.PreAuthorize
 
 @RestController
 @RequestMapping("/utilisateurs")
@@ -19,53 +19,29 @@ class UtilisateurController (private val utilisateursService: UtilisateursServic
     @GetMapping
     fun obtenirUtilisateurs(): ResponseEntity<List<Utilisateurs>> =
         ResponseEntity.ok(utilisateursService.obtenirUtilisateurs())
-    /*fun obtenirUtilisateur()= listOf(
-        Utilisateurs(2, "Vincent", false),
-        Utilisateurs(3, "Marie", true),
-        Utilisateurs(4, "Luc", false),
-        Utilisateurs(5, "Sophie", true),
-
-
-    )*/
 
     @GetMapping(params=["nom"])
     fun obtenirUtilisateurParNom(@RequestParam nom: String): ResponseEntity<Utilisateurs> =
         ResponseEntity.ok(utilisateursService.obtenirUtilisateurParNom(nom))
-    /*fun chercherUtilisateur(@RequestParam nom: String) =
-    Utilisateurs(2, nom, false)*/
-       
 
     @GetMapping("/{id}")
     fun obtenirUtilisateurParId(@PathVariable id: Int): ResponseEntity<Utilisateurs> {
-        if(utilisateursService.obtenirUtilisateurParId(id)==null){
-            throw RessourceInexistanteException("L'utilisateur est inexistant dans le système")
-        }
-        return ResponseEntity.ok(utilisateursService.obtenirUtilisateurParId(id))
-            
+        return ResponseEntity.ok(utilisateursService.obtenirUtilisateurParId(id))      
     }
-    /*fun obtenirUtilisateurParID(@PathVariable id: Int) =
-    Utilisateurs(id, "Vincent", false)*/
-    
     
     @PostMapping
-    @PreAuthorize("hasAuthority('ajouter:utilisateurs')")
+    /*@PreAuthorize("hasAuthority('ajouter:utilisateurs')")*/
     fun creerUtilisateur(@RequestBody utilisateur: Utilisateurs): ResponseEntity<Utilisateurs> = 
         ResponseEntity.ok(utilisateursService.ajouterUtilisateur(utilisateur))
 
     @PutMapping("/{id}")
     fun modifierUtilisateur(@PathVariable id: Int, @RequestBody utilisateur: Utilisateurs): ResponseEntity<Utilisateurs> {
-        if(utilisateursService.obtenirUtilisateurParId(id)==null){
-            throw RessourceInexistanteException("L'utilisateur est inexistant dans le système")
-        }
         return ResponseEntity.ok(utilisateursService.modifierUtilisateur(id, utilisateur))
     }
         
         
     @DeleteMapping("/{id}")
     fun supprimerUtilisateur(@PathVariable id: Int): ResponseEntity<Void> {
-        if(utilisateursService.obtenirUtilisateurParId(id)==null){
-            throw RessourceInexistanteException("L'utilisateur est inexistant dans le système")
-        }
         utilisateursService.supprimerUtilisateur(id)
         return ResponseEntity.noContent().build()
     }

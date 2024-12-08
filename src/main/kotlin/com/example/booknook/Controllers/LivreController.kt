@@ -31,9 +31,6 @@ class LivreController(private val livreService: LivreService) {
 
     @GetMapping("/{isbn}")
     fun obtenirLivreParIsbn(@PathVariable isbn: String): ResponseEntity<Livres> {
-        if(livreService.obtenirLivreParIsbn(isbn)==null){
-            throw RessourceInexistanteException("Le livre est inexistant dans le système")
-        }
         return ResponseEntity.ok(livreService.obtenirLivreParIsbn(isbn))
             
     }
@@ -41,25 +38,18 @@ class LivreController(private val livreService: LivreService) {
     
     @PostMapping
     fun creerLivre(@RequestBody livres: Livres): ResponseEntity<Livres>{
-        val isbn = livres.isbn
-        return ResponseEntity.ok(livreService.ajouterLivre(isbn, livres))
+        return ResponseEntity.ok(livreService.ajouterLivre(livres))
     }
 
 
     @PutMapping("/{isbn}")
     fun modifierLivre(@PathVariable isbn: String, @RequestBody livres: Livres): ResponseEntity<Livres> {
-        if(livreService.obtenirLivreParIsbn(isbn)==null){
-            throw RessourceInexistanteException("Le livre est inexistant dans le système")
-        }
         return ResponseEntity.ok(livreService.modifierLivres(isbn, livres))
     }
         
         
     @DeleteMapping("/{isbn}")
     fun supprimerLivre(@PathVariable isbn: String): ResponseEntity<Void> {
-        if(livreService.obtenirLivreParIsbn(isbn)==null){
-            throw RessourceInexistanteException("Le livre est inexistant dans le système")
-        }
         livreService.supprimerLivres(isbn)
         return ResponseEntity.noContent().build()
     }
