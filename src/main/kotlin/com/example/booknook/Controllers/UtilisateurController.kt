@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.http.ResponseEntity
 import org.springframework.http.HttpStatus
-//import org.springframework.security.access.prepost.PreAuthorize
 
 @RestController
 @RequestMapping("/utilisateurs")
@@ -30,7 +29,6 @@ class UtilisateurController (private val utilisateursService: UtilisateursServic
     }
     
     @PostMapping
-    /*@PreAuthorize("hasAuthority('ajouter:utilisateurs')")*/
     fun creerUtilisateur(@RequestBody utilisateur: Utilisateurs): ResponseEntity<Utilisateurs> = 
         ResponseEntity.ok(utilisateursService.ajouterUtilisateur(utilisateur))
 
