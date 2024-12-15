@@ -9,8 +9,13 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.DeleteMapping
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 import org.springframework.http.ResponseEntity
 import org.springframework.http.HttpStatus
+import org.springframework.security.core.AuthenticatedPrincipal
+import org.springframework.security.core.annotation.AuthenticationPrincipal
+import org.springframework.security.oauth2.jwt.Jwt
+
 
 @RestController
 @RequestMapping("/utilisateurs")
@@ -29,12 +34,25 @@ class UtilisateurController (private val utilisateursService: UtilisateursServic
     }
     
     @PostMapping
-    fun creerUtilisateur(@RequestBody utilisateur: Utilisateurs): ResponseEntity<Utilisateurs> = 
-        ResponseEntity.ok(utilisateursService.ajouterUtilisateur(utilisateur))
+    fun creerUtilisateur(@RequestBody utilisateur: Utilisateurs, @AuthenticationPrincipal jeton: Jwt): ResponseEntity<Utilisateurs> {
+        val nouvelUtilisateur = utilisateursService.ajouterUtilisateur(utilisateur, jeton)
+        val uri = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(nouvelUtilisateur!!.id)
+                .toUri()
+        return ResponseEntity.created(uri).body(nouvelUtilisateur)
 
+    } 
     @PutMapping("/{id}")
-    fun modifierUtilisateur(@PathVariable id: Int, @RequestBody utilisateur: Utilisateurs): ResponseEntity<Utilisateurs> {
-        return ResponseEntity.ok(utilisateursService.modifierUtilisateur(id, utilisateur))
+    fun modifierUtilisateur(@PathVariable id: Int, @RequestBody utilisateur: Utilisateurs, @AuthenticationPrincipal jeton: Jwt): ResponseEntity<Utilisateurs> {
+        val nouvelUtilisateur = utilisateursService.modifierUtilisateur(id, utilisateur, jeton)
+        val uri = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(nouvelUtilisateur!!.id)
+                .toUri()
+        return ResponseEntity.created(uri).body(nouvelUtilisateur)
     }
         
         
