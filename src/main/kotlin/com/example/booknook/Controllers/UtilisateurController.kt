@@ -45,4 +45,7 @@ class UtilisateurController (private val utilisateursService: UtilisateursServic
         utilisateursService.supprimerUtilisateur(id)
         return ResponseEntity.noContent().build()
     }
+    @GetMapping("/recommendations")
+    fun obtenirRecommendations(@RequestParam nom: String): ResponseEntity<List<Livres>> =
+        ResponseEntity.ok(utilisateursService.obtenirRecommendations(nom))
 }

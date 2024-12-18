@@ -24,4 +24,5 @@ class UtilisateursService(private val utilisateursDAO: UtilisateursDAOImpl){
         }
         utilisateursDAO.effacer(id) ?: throw RessourceInexistanteException("L'utilisateur  est inexistant dans le système")
     }
+    fun obtenirRecommendations(nom: String): List<Livres> =utilisateursDAO.livresRecommandations(nom)
 }

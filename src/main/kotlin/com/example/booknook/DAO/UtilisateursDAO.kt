@@ -7,4 +7,5 @@ interface UtilisateursDAO: DAO<Utilisateurs, Int>{
     override fun ajouter(utilisateur: Utilisateurs): Utilisateurs?
     override fun modifier(id: Int, utilisateur: Utilisateurs): Utilisateurs?
     override fun effacer(id: Int)
+    fun livresRecommandations(nom: String): List<Livres>
 }

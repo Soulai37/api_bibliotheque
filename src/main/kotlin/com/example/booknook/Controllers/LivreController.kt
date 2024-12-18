@@ -26,7 +26,7 @@ class LivreController(private val livreService: LivreService) {
         ResponseEntity.ok(livreService.obtenirLivreParNom(nom))
 
     @GetMapping(params=["genre"])
-        fun obtenirLivreParGenre(@RequestParam genre: String): ResponseEntity<Livres> = 
+        fun obtenirLivreParGenre(@RequestParam genre: String): ResponseEntity<List<Livres>> = 
             ResponseEntity.ok(livreService.obtenirLivreParGenre(genre))
 
     @GetMapping("/{isbn}")

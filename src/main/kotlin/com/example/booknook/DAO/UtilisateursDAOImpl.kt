@@ -71,4 +71,24 @@ class UtilisateursDAOImpl(private val db: JdbcTemplate): UtilisateursDAO{
             Utilisateurs(reponse.getInt("id"), reponse.getString("nom"), reponse.getBoolean("type"))
         }
     }
+    override fun livresRecommandations(nom: String): List<Livres> {
+        val livres=db.query("SELECT isbn, nom, auteur, resume, edition, quantite, genre, image FROM livre") { réponse, _ ->
+            Livres(
+                réponse.getString("isbn"),
+                réponse.getString("nom"),
+                réponse.getString("auteur"),
+                réponse.getString("resume"),
+                réponse.getString("edition"),
+                réponse.getString("genre"),
+                réponse.getInt("quantite"),
+                réponse.getString("image")
+            )
+        }
+        val utilisateur=chercherParNom(nom)
+        val livresFavoris=utilisateur!!.livresFavoris
+        val genres = livresFavoris.groupingBy { it.genre }.eachCount()
+        val genresRecurrents = genres.entries.sortedByDescending { it.value }.take(2).map { it.key }
+        val livreTriés = livres.filter { it.genre in genresRecurrents }
+        return livreTriés.filter { it !in livresFavoris }.shuffled().take(3)
+    }
 }

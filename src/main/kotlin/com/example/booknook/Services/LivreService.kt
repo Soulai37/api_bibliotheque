@@ -16,7 +16,7 @@ class LivreService(private val livreDAO: LivreDAOImp){
         return livreDAO.chercherParId(isbn) ?: throw RessourceInexistanteException("Le livre  est inexistant dans le système")
     }
     fun obtenirLivreParNom(nom: String): Livres?=livreDAO.chercherParNom(nom)
-    fun obtenirLivreParGenre(genre: String): Livres?=livreDAO.chercherParGenre(genre)
+    fun obtenirLivreParGenre(genre: String): List<Livres>?=livreDAO.chercherParGenre(genre)
     fun ajouterLivre(livres: Livres): Livres?{
         val isbn = livres.isbn
         verificationISBN(isbn)
