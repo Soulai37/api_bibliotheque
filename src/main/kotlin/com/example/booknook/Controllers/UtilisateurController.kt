@@ -29,8 +29,14 @@ class UtilisateurController (private val utilisateursService: UtilisateursServic
         ResponseEntity.ok(utilisateursService.obtenirUtilisateurParNom(nom))
 
     @GetMapping("/{id}")
-    fun obtenirUtilisateurParId(@PathVariable id: Int): ResponseEntity<Utilisateurs> {
-        return ResponseEntity.ok(utilisateursService.obtenirUtilisateurParId(id))      
+    fun obtenirUtilisateurParId(@PathVariable id: Int, @AuthenticationPrincipal jeton: Jwt): ResponseEntity<Utilisateurs> {
+        val nouvelUtilisateur = utilisateursService.obtenirUtilisateurParId(id, jeton)
+        val uri = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(nouvelUtilisateur!!.id)
+                .toUri()
+        return ResponseEntity.ok(nouvelUtilisateur)    
     }
     
     @PostMapping
@@ -52,7 +58,7 @@ class UtilisateurController (private val utilisateursService: UtilisateursServic
                 .path("/{id}")
                 .buildAndExpand(nouvelUtilisateur!!.id)
                 .toUri()
-        return ResponseEntity.created(uri).body(nouvelUtilisateur)
+        return ResponseEntity.ok(nouvelUtilisateur)
     }
         
         

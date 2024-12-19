@@ -1,6 +1,7 @@
 package com.example.booknook
 import org.springframework.stereotype.Service
 import com.example.booknook.LivreDAO
+import org.springframework.security.access.prepost.PreAuthorize
 
 @Service
 class LivreService(private val livreDAO: LivreDAOImp){
@@ -17,20 +18,21 @@ class LivreService(private val livreDAO: LivreDAOImp){
     }
     fun obtenirLivreParNom(nom: String): Livres?=livreDAO.chercherParNom(nom)
     fun obtenirLivreParGenre(genre: String): Livres?=livreDAO.chercherParGenre(genre)
+    @PreAuthorize("hasAuthority('ajouter:livres')")
     fun ajouterLivre(livres: Livres): Livres?{
         val isbn = livres.isbn
         verificationISBN(isbn)
         return  livreDAO.ajouter(livres) 
         
     }
-
+    @PreAuthorize("hasAuthority('modifier:livres')")
     fun modifierLivres(isbn: String, livres: Livres): Livres?{
         verificationISBN(isbn)
         val isbn2 = livres.isbn
         verificationISBN(isbn2)
         return livreDAO.modifier(isbn, livres) ?: throw RessourceInexistanteException("Le livre  est inexistant dans le système")
     }
-
+    @PreAuthorize("hasAuthority('supprimer:livres')")
     fun supprimerLivres(isbn: String){
         verificationISBN(isbn)
         return livreDAO.effacer(isbn) ?: throw RessourceInexistanteException("Le livre  est inexistant dans le système")

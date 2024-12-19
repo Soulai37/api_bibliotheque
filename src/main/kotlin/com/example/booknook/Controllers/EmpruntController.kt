@@ -32,7 +32,7 @@ class EmpruntController (private val empruntService: EmpruntService){
                 .path("/{id}")
                 .buildAndExpand(emprunt!!.id)
                 .toUri()
-        return ResponseEntity.created(uri).body(emprunt)
+        return ResponseEntity.ok(emprunt)
     }
     @GetMapping(params=["nomLivre"])
     fun obtenirEmpruntParNomLivre(@RequestParam nomLivre: String, @AuthenticationPrincipal jeton: Jwt): ResponseEntity<Emprunt> {
@@ -42,7 +42,7 @@ class EmpruntController (private val empruntService: EmpruntService){
                 .path("/{id}")
                 .buildAndExpand(emprunt!!.id)
                 .toUri()
-        return ResponseEntity.created(uri).body(emprunt)
+        return ResponseEntity.ok(emprunt)
     }
 
     @GetMapping(params=["nomUtilisateur"])
@@ -53,12 +53,18 @@ class EmpruntController (private val empruntService: EmpruntService){
                 .path("/{id}")
                 .buildAndExpand(emprunt[0].id)
                 .toUri()
-        return ResponseEntity.created(uri).body(emprunt)
+        return ResponseEntity.ok(emprunt)
     }
     @PostMapping
-    fun creerEmprunt(@RequestBody emprunt: Emprunt): ResponseEntity<Emprunt> = 
-        ResponseEntity.ok(empruntService.ajouterEmprunt(emprunt))
-
+    fun creerEmprunt(@RequestBody emprunt: Emprunt, @AuthenticationPrincipal jeton: Jwt): ResponseEntity<Emprunt> {
+        val emprunt=empruntService.ajouterEmprunt(emprunt, jeton)
+        val uri = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(emprunt!!.id)
+                .toUri()
+        return ResponseEntity.created(uri).body(emprunt)
+    }
     @PutMapping("/{id}")
     fun modifierEmprunt(@PathVariable id: Int, @RequestBody emprunt: Emprunt, @AuthenticationPrincipal jeton: Jwt): ResponseEntity<Emprunt> {
         val emprunt = empruntService.modifierEmprunt(id, emprunt, jeton)
@@ -67,11 +73,11 @@ class EmpruntController (private val empruntService: EmpruntService){
                 .path("/{id}")
                 .buildAndExpand(emprunt!!.id)
                 .toUri()
-        return ResponseEntity.created(uri).body(emprunt)
+        return ResponseEntity.ok(emprunt)
     }
     @DeleteMapping("/{id}")
-    fun supprimerUtilisateur(@PathVariable id: Int): ResponseEntity<Void> {
-        empruntService.supprimerEmprunt(id)
+    fun supprimerUtilisateur(@PathVariable id: Int, @AuthenticationPrincipal jeton: Jwt): ResponseEntity<Void> {
+        empruntService.supprimerEmprunt(id, jeton)
         return ResponseEntity.noContent().build()
     }
 }

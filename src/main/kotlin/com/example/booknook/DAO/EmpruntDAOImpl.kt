@@ -28,7 +28,7 @@ class EmpruntDAOImpl(private val db: JdbcTemplate): EmpruntDAO{
             where e.id=?
             """, id) { reponse, _ ->
             val livre=Livres(reponse.getString("isbn"), reponse.getString("nom"), reponse.getString("auteur"), reponse.getString("resume"), reponse.getString("edition"), reponse.getString("genre"), reponse.getInt("quantite"), reponse.getString("image"))
-            val utilisateur=Utilisateurs(reponse.getInt("id"), reponse.getString("u.nom"), reponse.getString("u.login"), reponse.getBoolean("type"))
+            val utilisateur=Utilisateurs(reponse.getInt("id_utilisateur"), reponse.getString("u.nom"), reponse.getString("u.login"), reponse.getBoolean("type"))
             emprunt=Emprunt(reponse.getInt("id"), livre, utilisateur, reponse.getDate("date_emprunt").toLocalDate(), reponse.getDate("date_retour").toLocalDate())
         }
         return emprunt
@@ -58,11 +58,11 @@ class EmpruntDAOImpl(private val db: JdbcTemplate): EmpruntDAO{
                 WHERE u.nom LIKE ?
         """, nom) { reponse, _ ->
         val livre=Livres(reponse.getString("isbn"), reponse.getString("nom"), reponse.getString("auteur"), reponse.getString("resume"), reponse.getString("edition"), reponse.getString("edition"), reponse.getInt("quantite"), reponse.getString("image"))
-        val utilisateur=Utilisateurs(reponse.getInt("id"), reponse.getString("u.nom"), reponse.getString("u.login"), reponse.getBoolean("type"))
+        val utilisateur=Utilisateurs(reponse.getInt("e.id_utilisateur"), reponse.getString("u.nom"), reponse.getString("u.login"), reponse.getBoolean("type"))
         Emprunt(reponse.getInt("id"), livre, utilisateur, reponse.getDate("date_emprunt").toLocalDate(), reponse.getDate("date_retour").toLocalDate())
     }
     override fun ajouter(emprunt: Emprunt): Emprunt? {
-        db.query("INSERT INTO emprunt(id, isbn_livre, id_utilisateur, date_emprunt, date_retour) VALUES (?, ?, ?, ?, ?)", emprunt.id, emprunt.livre.isbn, emprunt.utilisateur.id, emprunt.date_emprunt, emprunt.date_retour){ reponse, _ ->
+        db.query("INSERT INTO emprunt(isbn_livre, id_utilisateur, date_emprunt, date_retour) VALUES (?, ?, ?, ?)", emprunt.livre.isbn, emprunt.utilisateur.id, emprunt.date_emprunt, emprunt.date_retour){ reponse, _ ->
         }
         return emprunt
     }

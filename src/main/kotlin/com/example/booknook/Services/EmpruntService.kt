@@ -13,7 +13,7 @@ class EmpruntService(private val empruntDAO: EmpruntDAOImpl){
     fun obtenirEmpruntParId(id: Int, jeton: Jwt): Emprunt? {
         var loginAuthentification = jeton.claims["email"] as? String ?: throw OperationNonAutoriseeException("Votre jeton d'accès ne contient pas les éléments nécesssaires à la création d'un profil de joueur")
         val emprunt=empruntDAO.chercherParId(id)
-        if (emprunt!!.utilisateur.login != loginAuthentification) {
+        if (emprunt!!.utilisateur.login != loginAuthentification && loginAuthentification!="admin@booknook.qc.ca") {
             throw OperationNonAutoriseeException("Vous n'êtes pas autorisé à voir les emprunts des autres utilisateurs.")
         }
         return emprunt
@@ -22,7 +22,7 @@ class EmpruntService(private val empruntDAO: EmpruntDAOImpl){
     fun obtenirEmpruntParNomLivre(nom: String, jeton: Jwt): Emprunt? {
         var loginAuthentification = jeton.claims["email"] as? String ?: throw OperationNonAutoriseeException("Votre jeton d'accès ne contient pas les éléments nécesssaires à la création d'un profil de joueur")
         val emprunt=empruntDAO.chercherParNom(nom)
-        if (emprunt!!.utilisateur.login != loginAuthentification) {
+        if (emprunt!!.utilisateur.login != loginAuthentification && loginAuthentification!="admin@booknook.qc.ca") {
             throw OperationNonAutoriseeException("Vous n'êtes pas autorisé à voir les emprunts des autres utilisateurs.")
         }
         return emprunt
@@ -31,24 +31,32 @@ class EmpruntService(private val empruntDAO: EmpruntDAOImpl){
     fun obtenirEmpruntParNomUtilisateur(nom: String, jeton: Jwt): List<Emprunt> {
         var loginAuthentification = jeton.claims["email"] as? String ?: throw OperationNonAutoriseeException("Votre jeton d'accès ne contient pas les éléments nécesssaires à la création d'un profil de joueur")
         val emprunt=empruntDAO.chercherParNomUtilisateur(nom)
-        if (emprunt[0].utilisateur.login != loginAuthentification) {
+        if (emprunt[0].utilisateur.login != loginAuthentification && loginAuthentification!="admin@booknook.qc.ca") {
             throw OperationNonAutoriseeException("Vous n'êtes pas autorisé à voir les emprunts des autres utilisateurs.")
         }
         return emprunt
     }
-    fun ajouterEmprunt(emprunt: Emprunt): Emprunt?=empruntDAO.ajouter(emprunt)
+    fun ajouterEmprunt(emprunt: Emprunt, jeton: Jwt): Emprunt? {
+        var loginAuthentification = jeton.claims["email"] as? String ?: throw OperationNonAutoriseeException("Votre jeton d'accès ne contient pas les éléments nécesssaires à la création d'un profil de joueur")
+        if (emprunt!!.utilisateur.login != loginAuthentification && loginAuthentification!="admin@booknook.qc.ca") {
+            throw OperationNonAutoriseeException("Vous n'êtes pas autorisé à modifier les emprunts des autres utilisateurs.")
+        }
+        return empruntDAO.ajouter(emprunt)
+    } 
     @PreAuthorize("hasAuthority('modifier:emprunts')")
     fun modifierEmprunt(id: Int, emprunt: Emprunt, jeton: Jwt): Emprunt?{
         var loginAuthentification = jeton.claims["email"] as? String ?: throw OperationNonAutoriseeException("Votre jeton d'accès ne contient pas les éléments nécesssaires à la création d'un profil de joueur")
-        if (emprunt!!.utilisateur.login != loginAuthentification) {
+        if (emprunt!!.utilisateur.login != loginAuthentification && loginAuthentification!="admin@booknook.qc.ca") {
             throw OperationNonAutoriseeException("Vous n'êtes pas autorisé à modifier les emprunts des autres utilisateurs.")
         }
         return empruntDAO.modifier(id, emprunt)
     }
     @PreAuthorize("hasAuthority('supprimer:emprunts')")
-    fun supprimerEmprunt(id: Int) {
-        if(id <= 0) {
-            throw BadRequestException("L'id $id n'est pas dans un format valide.")
+    fun supprimerEmprunt(id: Int, jeton: Jwt) {
+        val emprunt=empruntDAO.chercherParId(id)
+        var loginAuthentification = jeton.claims["email"] as? String ?: throw OperationNonAutoriseeException("Votre jeton d'accès ne contient pas les éléments nécesssaires à la création d'un profil de joueur")
+        if (emprunt!!.utilisateur.login != loginAuthentification && loginAuthentification!="admin@booknook.qc.ca") {
+            throw OperationNonAutoriseeException("Vous n'êtes pas autorisé à modifier les emprunts des autres utilisateurs.")
         }
            return empruntDAO.effacer(id) ?: throw RessourceInexistanteException("L'emprunt est inexistant dans le système")
     }
