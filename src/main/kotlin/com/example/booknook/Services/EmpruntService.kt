@@ -39,10 +39,6 @@ class EmpruntService(private val empruntDAO: EmpruntDAOImpl){
     fun ajouterEmprunt(emprunt: Emprunt): Emprunt?=empruntDAO.ajouter(emprunt)
     @PreAuthorize("hasAuthority('modifier:emprunts')")
     fun modifierEmprunt(id: Int, emprunt: Emprunt, jeton: Jwt): Emprunt?{
-        /*if(id<=0){
-            throw BadRequestException("L'id $id n'est pas dans un format valide.")
-        }
-        return empruntDAO.modifier(id, emprunt) ?: throw RessourceInexistanteException("L'emprunt est inexistant dans le système")*/
         var loginAuthentification = jeton.claims["email"] as? String ?: throw OperationNonAutoriseeException("Votre jeton d'accès ne contient pas les éléments nécesssaires à la création d'un profil de joueur")
         if (emprunt!!.utilisateur.login != loginAuthentification) {
             throw OperationNonAutoriseeException("Vous n'êtes pas autorisé à modifier les emprunts des autres utilisateurs.")
