@@ -1,16 +1,84 @@
-INSERT INTO utilisateur (id, nom, type) VALUES (2, 'Vincent', FALSE);
-INSERT INTO utilisateur (id, nom, type) VALUES (3, 'Marie', TRUE);
-INSERT INTO utilisateur (id, nom, type) VALUES (4, 'Luc', FALSE);
-INSERT INTO utilisateur (id, nom, type) VALUES (5, 'Sophie', TRUE);
+USE aaziz_api_bibliotheque;
+-- Insertion dans la table utilisateur (seul le premier utilisateur a "type" = true)
+INSERT INTO utilisateur (id, nom, login, type) VALUES
+(1, 'Admin', 'admin@booknook.qc.ca', true),
+(2, 'Alice', 'alice@booknook.ca', false),
+(3, 'Bob', 'bob@booknook.ca', false),
+(4, 'Charlie', 'charlie@booknook.ca', false),
+(5, 'David', 'david@booknook.ca', false),
+(6, 'Eve', 'eve@booknook.ca', false),
+(7, 'Frank', 'frank@booknook.ca', false),
+(8, 'Grace', 'grace@booknook.ca', false),
+(9, 'Heidi', 'heidi@booknook.ca', false),
+(10, 'Ivan', 'ivan@booknook.ca', false),
+(11, 'Judy', 'judy@booknook.ca', false),
+(12, 'Ken', 'ken@booknook.ca', false),
+(13, 'Laura', 'laura@booknook.ca', false),
+(14, 'Mallory', 'mallory@booknook.ca', false),
+(15, 'Nina', 'nina@booknook.ca', false);
+ 
+-- Insertion dans la table livre avec des genres différents
+INSERT INTO livre (isbn, nom, auteur, resume, edition, genre, quantite, image) VALUES
+('ISBN0001', '1984', 'George Orwell', 'Un roman dystopique.', 'Gallimard', 'Dystopie', 10, '1984.png'),
+('ISBN0002', 'Neuromancer', 'William Gibson', 'Ce roman de science-fiction cyberpunk raconte l\'histoire de Case, un hacker déchu qui, après avoir été trahi et mutilé, se voit offrir une chance de revenir dans le cyberespace. Ce livre est une exploration de la réalité virtuelle, de l\'intelligence artificielle et de la société post-industrielle.', 'Pocket', 'Science-fiction', 5, 'https://images.squarespace-cdn.com/content/v1/51ad3961e4b0ae1d9bf5b6f1/a4f2090e-148f-4ca0-9174-48765db17223/William-Gibson-Neuromancer-Cyberpunk-Cover-Web.jpg?format=750w'),
+('ISBN0003', 'Pierre et Jean', 'Guy de Maupassant', '*Pierre et Jean* est un roman qui traite de l\'héritage, de la jalousie et des conflits familiaux. L\'histoire suit Pierre, qui découvre que son frère Jean a hérité d\'une grande somme d\'argent de leur mère, ce qui ébranle leur relation et soulève des questions sur la fidélité et la confiance.', 'Le Livre de Poche', 'Réaliste', 7, 'https://m.media-amazon.com/images/I/61mL3Ir41fL._AC_UF1000,1000_QL80_.jpg'),
+('ISBN0004', 'Le Libraire', 'Gérard Bessette', 'Dans ce roman, un libraire canadien vit une vie tranquille jusqu\'à ce qu\'il soit confronté à une situation qui perturbe sa routine et ses croyances. L\'œuvre explore la vie ordinaire d\'un homme dans une petite ville et les forces extérieures qui viennent bouleverser son existence.', 'Groupe Librex', 'Réaliste', 2, 'libraire.png'),
+('ISBN0005', 'To Kill a Mockingbird', 'Harper Lee', 'Un roman sur les injustices raciales.', 'J.B. Lippincott', 'Dystopie', 12, 'to_kill_a_mockingbird.png'),
+('ISBN0006', 'Moby Dick', 'Herman Melville', 'Une chasse obsessionnelle à la baleine.', 'Harper & Brothers', 'Aventure', 8, 'moby_dick.png'),
+('ISBN0007', 'Les Misérables', 'Victor Hugo', 'Un chef-d\'œuvre du roman français, *Les Misérables* raconte l\'histoire de Jean Valjean, un ancien forçat qui cherche à se racheter et à échapper à l\'inspecteur Javert. Ce roman épique plonge dans la misère sociale du XIXe siècle et explore des thèmes de rédemption, d\'amour et de lutte contre l\'injustice.', 'Folio', 'Réaliste', 10, 'https://m.media-amazon.com/images/I/71mPzsZvh6L._AC_UF1000,1000_QL80_.jpg'),
+('ISBN0008', 'Les Travailleurs de la Mer', 'Victor Hugo', 'Un roman qui explore le courage et la détermination d\'un homme, Gilliatt, qui tente de sauver un navire naufragé dans les eaux tumultueuses de la mer. Ce roman présente la lutte héroïque d\'un homme contre les éléments et les obstacles humains.', 'Folio', 'Aventure', 0, 'lestravailleursdelamer.png'),
+('ISBN0009', 'Le Petit Prince', 'Antoine de Saint-Exupéry', 'Un conte philosophique.', 'Folio', 'Conte', 5, 'le_petit_prince.png'),
+('ISBN0010', 'The Catcher in the Rye', 'J.D. Salinger', 'Un récit d\'adolescence.', 'Little, Brown and Company', 'Conte', 2, 'the_catcher_in_the_rye.png'),
+('ISBN0011', 'Brave New World', 'Aldous Huxley', 'Une vision d\'un futur dystopique.', 'Chatto & Windus', 'Dystopie', 6, 'brave_new_world.png'),
+('ISBN0012', '2001 Space Odyssey', 'Arthur C. Clarke', 'Ce roman de science-fiction raconte le voyage d\'un équipage spatial vers Jupiter, après la découverte d\'un mystérieux monolithe sur la Lune. Le livre explore des thèmes profonds liés à l\'intelligence artificielle, l\'évolution humaine et le contact avec des formes de vie extraterrestres.', 'Panther', 'Science-fiction', 2, 'https://d1cm35kbp068hs.cloudfront.net/mvm2w9it9w/thumbnail.jpg'),
+('ISBN0013', 'Notre-Dame de Paris', 'Victor Hugo', 'Ce roman monumental raconte l\'histoire de Quasimodo, un bossu sonneur de cloches, et de son amour non réciproque pour la belle Esmeralda. Il s\'agit aussi d\'une réflexion sur la beauté, la justice et la misère à Paris au Moyen Âge.', 'Folio', 'Historique', 9, 'notredamedeparis.png'),
+('ISBN0014', 'The Martian', 'Andy Weir', '*The Martian* suit l\'histoire de Mark Watney, un astronaute qui se retrouve accidentellement laissé pour mort sur Mars après une mission qui tourne mal. En utilisant ses compétences en science et ingénierie, Watney lutte pour survivre dans des conditions extrêmes, tout en étant pourchassé par l\'inexorable passage du temps.', 'Crown Publishing', 'Science-fiction', 2, 'martian.png'),
+('ISBN0015', 'The Odyssey', 'Homer', 'Les aventures du héros grec Ulysse.', 'Penguin Classics', 'Aventure', 13, 'the_odyssey.png');
+ 
 
-
-INSERT INTO livre (isbn, nom, auteur, resume, edition, quantite) VALUES ('978-1234567890', 'Les Misérables', 'Victor Hugo', 'Lutte contre l'injustice', 'Édition spéciale', 5);
-INSERT INTO livre (isbn, nom, auteur, resume, edition, quantite) VALUES ('978-0987654321', 'Pierre et Jean', 'Guy de Maupassant', 'Dilemme familial', 'Édition classique', 3);
-INSERT INTO livre (isbn, nom, auteur, resume, edition, quantite) VALUES ('978-1122334455', '1984', 'George Orwell', 'Totalitarisme et surveillance', 'Édition moderne', 10);
-INSERT INTO livre (isbn, nom, auteur, resume, edition, quantite) VALUES ('978-2233445566', 'Le Libraire', 'Gérard Bessette', 'Quête identitaire', 'Édition québécoise', 4);
-
-INSERT INTO emprunt (id, isbn_livre, id_utilisateur, date_emprunt, date_retour) VALUES (1, '978-1234567890', 1, '2024-01-10', '2024-02-10');
-INSERT INTO emprunt (id, isbn_livre, id_utilisateur, date_emprunt, date_retour) VALUES (2, '978-0987654321', 2, '2024-03-12', '2024-04-12');
-INSERT INTO emprunt (id, isbn_livre, id_utilisateur, date_emprunt, date_retour) VALUES (3, '978-1122334455', 3, '2024-05-15', '2024-06-15');
-INSERT INTO emprunt (id, isbn_livre, id_utilisateur, date_emprunt, date_retour) VALUES (4, '978-2233445566', 4, '2024-07-20', '2024-08-20');
-
+ 
+-- Insertion dans la table utilisateur_livresFavoris avec 30 relations
+INSERT INTO utilisateur_livresFavoris (id_utilisateur, isbn_livre) VALUES
+(1, 'ISBN0001'), (1, 'ISBN0005'), (1, 'ISBN0010'), (1, 'ISBN0015'),
+(2, 'ISBN0002'), (2, 'ISBN0006'), (2, 'ISBN0011'), (2, 'ISBN0014'),
+(3, 'ISBN0003'), (3, 'ISBN0007'), (3, 'ISBN0009'), (3, 'ISBN0013'),
+(4, 'ISBN0004'), (4, 'ISBN0008'), (4, 'ISBN0012'), (4, 'ISBN0015'),
+(5, 'ISBN0001'), (5, 'ISBN0009'), (5, 'ISBN0010'), (5, 'ISBN0013'),
+(6, 'ISBN0002'), (6, 'ISBN0005'), (6, 'ISBN0014'), (6, 'ISBN0012'),
+(7, 'ISBN0003'), (7, 'ISBN0006'), (7, 'ISBN0011'), (7, 'ISBN0004'),
+(8, 'ISBN0007'), (8, 'ISBN0008'), (8, 'ISBN0015'), (8, 'ISBN0013'),
+(9, 'ISBN0003'), (9, 'ISBN0006'), (9, 'ISBN0014'), (9, 'ISBN0005'),
+(10, 'ISBN0002'), (10, 'ISBN0011'), (10, 'ISBN0013'), (10, 'ISBN0012');
+ 
+-- Insertion dans la table emprunt avec 30 emprunts
+INSERT INTO emprunt (id, isbn_livre, id_utilisateur, date_emprunt, date_retour) VALUES
+(1, 'ISBN0001', 2, '2024-01-10', '2024-01-20'),
+(2, 'ISBN0002', 3, '2024-02-01', '2024-02-11'),
+(3, 'ISBN0003', 4, '2024-03-05', '2024-03-15'),
+(4, 'ISBN0004', 5, '2024-04-12', '2024-04-22'),
+(5, 'ISBN0005', 6, '2024-05-09', '2024-05-19'),
+(6, 'ISBN0006', 7, '2024-06-16', '2024-06-26'),
+(7, 'ISBN0007', 8, '2024-07-23', '2024-08-02'),
+(8, 'ISBN0008', 9, '2024-08-15', '2024-08-25'),
+(9, 'ISBN0009', 10, '2024-09-02', '2024-09-12'),
+(10, 'ISBN0010', 11, '2024-10-05', '2024-10-15'),
+(11, 'ISBN0011', 12, '2024-11-09', '2024-11-19'),
+(12, 'ISBN0012', 13, '2024-12-13', '2024-12-23'),
+(13, 'ISBN0013', 14, '2025-01-18', '2025-01-28'),
+(14, 'ISBN0014', 15, '2025-02-20', '2025-03-02'),
+(15, 'ISBN0015', 1, '2025-03-25', '2025-04-04'),
+(16, 'ISBN0001', 3, '2024-01-15', '2024-01-25'),
+(17, 'ISBN0002', 4, '2024-02-12', '2024-02-22'),
+(18, 'ISBN0003', 5, '2024-03-20', '2024-03-30'),
+(19, 'ISBN0004', 6, '2024-04-10', '2024-04-20'),
+(20, 'ISBN0005', 7, '2024-05-01', '2024-05-11'),
+(21, 'ISBN0006', 8, '2024-06-14', '2024-06-24'),
+(22, 'ISBN0007', 9, '2024-07-03', '2024-07-13'),
+(23, 'ISBN0008', 10, '2024-08-06', '2024-08-16'),
+(24, 'ISBN0009', 11, '2024-09-19', '2024-09-29'),
+(25, 'ISBN0010', 12, '2024-10-21', '2024-10-31'),
+(26, 'ISBN0011', 13, '2024-11-11', '2024-11-21'),
+(27, 'ISBN0012', 14, '2024-12-15', '2024-12-25'),
+(28, 'ISBN0013', 15, '2025-01-01', '2025-01-11'),
+(29, 'ISBN0014', 1, '2025-02-03', '2025-02-13'),
+(30, 'ISBN0015', 2, '2025-03-07', '2025-03-17');
