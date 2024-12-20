@@ -64,8 +64,15 @@ class UtilisateursDAOImpl(private val db: JdbcTemplate): UtilisateursDAO{
     override fun modifier(id: Int, utilisateur: Utilisateurs): Utilisateurs? {
         val queryUtilisateur = "UPDATE utilisateur SET nom=?, type=? WHERE id=?"
         db.update(queryUtilisateur, utilisateur.nom, utilisateur.type, id)
+            val deleteQuery = "DELETE FROM utilisateur_livresFavoris WHERE id_utilisateur=?"
+        db.update(deleteQuery, id)
+        val insertQuery = "INSERT INTO utilisateur_livresFavoris (id_utilisateur, isbn_livre) VALUES (?, ?)"
+        for (livre in utilisateur.livresFavoris) {
+            db.update(insertQuery, id, livre.isbn)
+        }    
         return utilisateur
     }
+    
     override fun effacer(id: Int) {
         db.query("DELETE FROM utilisateur WHERE id=?", id){ reponse, _ ->
             Utilisateurs(reponse.getInt("id"), reponse.getString("nom"), reponse.getBoolean("type"))
