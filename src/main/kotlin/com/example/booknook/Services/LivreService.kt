@@ -17,7 +17,7 @@ class LivreService(private val livreDAO: LivreDAOImp){
         return livreDAO.chercherParId(isbn) ?: throw RessourceInexistanteException("Le livre  est inexistant dans le système")
     }
     fun obtenirLivreParNom(nom: String): Livres?=livreDAO.chercherParNom(nom)
-    fun obtenirLivreParGenre(genre: String): Livres?=livreDAO.chercherParGenre(genre)
+    fun obtenirLivreParGenre(genre: String):  List<Livres>?=livreDAO.chercherParGenre(genre)
     @PreAuthorize("hasAuthority('ajouter:livres')")
     fun ajouterLivre(livres: Livres): Livres?{
         val isbn = livres.isbn
@@ -30,11 +30,13 @@ class LivreService(private val livreDAO: LivreDAOImp){
         verificationISBN(isbn)
         val isbn2 = livres.isbn
         verificationISBN(isbn2)
+        obtenirLivreParIsbn(isbn)
         return livreDAO.modifier(isbn, livres) ?: throw RessourceInexistanteException("Le livre  est inexistant dans le système")
     }
     @PreAuthorize("hasAuthority('supprimer:livres')")
     fun supprimerLivres(isbn: String){
         verificationISBN(isbn)
+        obtenirLivreParIsbn(isbn)
         return livreDAO.effacer(isbn) ?: throw RessourceInexistanteException("Le livre  est inexistant dans le système")
     }
 }

@@ -49,6 +49,9 @@ class EmpruntDAOImpl(private val db: JdbcTemplate): EmpruntDAO{
         }
         return emprunt
     }
+    fun decrementerQuantite(isbn: String) {
+        db.update("UPDATE livre SET quantite = quantite - 1 WHERE isbn = ?", isbn)
+    }
     override fun chercherParNomUtilisateur(nom: String): List<Emprunt> = db.query("""
         SELECT e.id, e.isbn_livre, e.id_utilisateur, e.date_emprunt, e.date_retour,
                 l.isbn, l.nom, l.auteur, l.resume, l.auteur, l.edition, l.genre, l.quantite, l.image,

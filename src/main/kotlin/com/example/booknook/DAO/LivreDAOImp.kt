@@ -35,9 +35,8 @@ class LivreDAOImp(private val bd: JdbcTemplate): LivreDAO {
         )}
         return livres
     }
-    override fun chercherParGenre(genre: String): Livres? { var livres:Livres?=null  
-        bd.query("SELECT * FROM livre WHERE genre LIKE ?", genre) { réponse, _ ->
-        livres=Livres(
+    override fun chercherParGenre(genre: String): List<Livres>? = bd.query("SELECT * FROM livre WHERE genre LIKE ?", genre) { réponse, _ ->
+        Livres(
             réponse.getString("isbn"),
             réponse.getString("nom"),
             réponse.getString("auteur"),
@@ -46,9 +45,11 @@ class LivreDAOImp(private val bd: JdbcTemplate): LivreDAO {
             réponse.getString("genre"),
             réponse.getInt("quantite"),
             réponse.getString("image")
-        )}
-        return livres
+        )
     }
+
+
+
     override fun chercherParNom(nom: String): Livres? { var livres:Livres?=null  
         bd.query("SELECT * FROM livre WHERE nom LIKE ?", nom) { réponse, _ ->
         livres=Livres(
