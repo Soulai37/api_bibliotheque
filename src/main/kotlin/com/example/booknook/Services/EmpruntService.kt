@@ -41,13 +41,38 @@ class EmpruntService(private val empruntDAO: EmpruntDAOImpl){
         if (emprunt!!.utilisateur.login != loginAuthentification && loginAuthentification!="admin@booknook.qc.ca") {
             throw OperationNonAutoriseeException("Vous n'êtes pas autorisé à modifier les emprunts des autres utilisateurs.")
         }
+        if(emprunt.date_retour<emprunt.date_emprunt){
+            throw RequeteMalFormuleeException("Date de retour ne peut pas être inférieure à la date d'emprunt")
+        }
+        if (emprunt.livre.quantite <= 0) {
+            throw RequeteMalFormuleeException("Le livre ${emprunt.livre.nom} n'est pas disponible, la quantité est épuisée.")
+        }
+        val addedEmprunt = empruntDAO.ajouter(emprunt)
+
+        if (addedEmprunt != null) {
+            empruntDAO.decrementerQuantite(emprunt.livre.isbn)
+        }
+        return addedEmprunt
+    }
+
+    /*fun ajouterEmprunt(emprunt: Emprunt, jeton: Jwt): Emprunt? {
+        var loginAuthentification = jeton.claims["email"] as? String ?: throw OperationNonAutoriseeException("Votre jeton d'accès ne contient pas les éléments nécesssaires à la création d'un profil de joueur")
+        if (emprunt!!.utilisateur.login != loginAuthentification && loginAuthentification!="admin@booknook.qc.ca") {
+            throw OperationNonAutoriseeException("Vous n'êtes pas autorisé à modifier les emprunts des autres utilisateurs.")
+        }
+        if(emprunt.date_retour<emprunt.date_emprunt){
+            throw RequeteMalFormuleeException("Date de retour ne peut pas être inférieure à la date d'emprunt")
+        }
         return empruntDAO.ajouter(emprunt)
-    } 
+    } */
     @PreAuthorize("hasAuthority('modifier:emprunts')")
     fun modifierEmprunt(id: Int, emprunt: Emprunt, jeton: Jwt): Emprunt?{
         var loginAuthentification = jeton.claims["email"] as? String ?: throw OperationNonAutoriseeException("Votre jeton d'accès ne contient pas les éléments nécesssaires à la création d'un profil de joueur")
         if (emprunt!!.utilisateur.login != loginAuthentification && loginAuthentification!="admin@booknook.qc.ca") {
             throw OperationNonAutoriseeException("Vous n'êtes pas autorisé à modifier les emprunts des autres utilisateurs.")
+        }
+        if(emprunt.date_retour<emprunt.date_emprunt){
+            throw RequeteMalFormuleeException("Date de retour ne peut pas être inférieure à la date d'emprunt")
         }
         return empruntDAO.modifier(id, emprunt)
     }
