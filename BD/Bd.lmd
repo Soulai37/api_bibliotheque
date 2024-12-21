@@ -1,0 +1,37 @@
+CREATE SCHEMA IF NOT EXISTS aaziz_api_bibliotheque;
+USE aaziz_api_bibliotheque;
+ 
+CREATE TABLE utilisateur(
+	id INT PRIMARY KEY auto_increment,
+    nom VARCHAR(50) NOT NULL,
+    login varchar(50) NOT NULL UNIQUE,
+    type BOOLEAN
+);
+ 
+CREATE TABLE livre(
+	isbn varchar(50) PRIMARY KEY,
+    nom varchar(100),
+    auteur varchar(50),
+    resume text,
+    edition varchar(50),
+    genre varchar(50),
+    quantite INT DEFAULT 0,
+    image varchar(250)
+);
+ 
+CREATE TABLE utilisateur_livresFavoris(
+	id_utilisateur INT,
+    isbn_livre varchar(50),
+    FOREIGN KEY (id_utilisateur) REFERENCES utilisateur(id),
+    FOREIGN KEY (isbn_livre) REFERENCES livre(isbn)
+);
+ 
+CREATE TABLE emprunt(
+	id INT PRIMARY KEY auto_increment,
+    isbn_livre VARCHAR(50),
+    id_utilisateur INT,
+    date_emprunt DATE,
+    date_retour DATE,
+    FOREIGN KEY (isbn_livre) REFERENCES livre(isbn),
+    FOREIGN KEY (id_utilisateur) REFERENCES utilisateur(id)
+);
