@@ -1,0 +1,1061 @@
+{
+	"info": {
+		"_postman_id": "d1f53ac0-7d75-4435-a65d-d0b7e352f672",
+		"name": "Booknook",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37982984",
+		"_collection_link": "https://api-team-1503.postman.co/workspace/API-Biblioth%C3%A8que~344a2074-c794-40e0-8407-fe50e37419d3/collection/37982984-d1f53ac0-7d75-4435-a65d-d0b7e352f672?action=share&source=collection_link&creator=37982984"
+	},
+	"item": [
+		{
+			"name": "Bob",
+			"item": [
+				{
+					"name": "Consulter les livres",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/livres",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"livres"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Chercher livre par genre",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/livres?genre=science-fiction",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"livres"
+							],
+							"query": [
+								{
+									"key": "genre",
+									"value": "science-fiction"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Chercher livre par nom",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/livres?nom=neuromancer",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"livres"
+							],
+							"query": [
+								{
+									"key": "nom",
+									"value": "neuromancer"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consutler la liste d'emprunt",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/emprunts",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"emprunts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consulter un emprunt de Bob",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/emprunts/3",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"emprunts",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consulter la liste des emprunts de Bob",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/emprunts?nomUtilisateur=bob",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"emprunts"
+							],
+							"query": [
+								{
+									"key": "nomUtilisateur",
+									"value": "bob"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ajouter un emprunt pour autre utilisateur",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"livre\": {\r\n        \"isbn\": \"ISBN0001\",\r\n        \"nom\": \"1984\",\r\n        \"auteur\": \"George Orwell\",\r\n        \"resume\": \"Un roman dystopique.\",\r\n        \"edition\": \"Gallimard\",\r\n        \"genre\": \"Dystopie\",\r\n        \"quantite\": 10,\r\n        \"image\": \"1984.png\"\r\n    },\r\n    \"utilisateur\": {\r\n        \"id\": 2,\r\n        \"nom\": \"Alice\",\r\n        \"login\": \"alice@booknook.ca\",\r\n        \"type\": false,\r\n        \"livresFavoris\": []\r\n    },\r\n    \"date_emprunt\": \"2024-02-22\",\r\n    \"date_retour\": \"2024-05-12\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/emprunts",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"emprunts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ajouter un emprunt pour Bob",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"livre\": {\r\n        \"isbn\": \"ISBN0001\",\r\n        \"nom\": \"1984\",\r\n        \"auteur\": \"George Orwell\",\r\n        \"resume\": \"Un roman dystopique.\",\r\n        \"edition\": \"Gallimard\",\r\n        \"genre\": \"Dystopie\",\r\n        \"quantite\": 10,\r\n        \"image\": \"1984.png\"\r\n    },\r\n    \"utilisateur\": {\r\n        \"id\": 3,\r\n        \"nom\": \"Bob\",\r\n        \"login\": \"bob@booknook.ca\",\r\n        \"type\": false,\r\n        \"livresFavoris\": []\r\n    },\r\n    \"date_emprunt\": \"2024-02-22\",\r\n    \"date_retour\": \"2024-03-12\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/emprunts",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"emprunts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ajouter un emprunt date impossible",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"livre\": {\r\n        \"isbn\": \"ISBN0001\",\r\n        \"nom\": \"1984\",\r\n        \"auteur\": \"George Orwell\",\r\n        \"resume\": \"Un roman dystopique.\",\r\n        \"edition\": \"Gallimard\",\r\n        \"genre\": \"Dystopie\",\r\n        \"quantite\": 10,\r\n        \"image\": \"1984.png\"\r\n    },\r\n    \"utilisateur\": {\r\n        \"id\": 3,\r\n        \"nom\": \"Bob\",\r\n        \"login\": \"bob@booknook.ca\",\r\n        \"type\": false,\r\n        \"livresFavoris\": []\r\n    },\r\n    \"date_emprunt\": \"2024-02-22\",\r\n    \"date_retour\": \"2024-01-12\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/emprunts",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"emprunts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Livre indisponible",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"livre\": {\r\n        \"isbn\": \"ISBN0008\",\r\n        \"nom\": \"Les Travailleurs de la Mer\",\r\n        \"auteur\": \"Victor Hugo\",\r\n        \"resume\": \"Un roman qui explore le courage et la détermination d'un homme, Gilliatt, qui tente de sauver un navire naufragé dans les eaux tumultueuses de la mer. Ce roman présente la lutte héroïque d'un homme contre les éléments et les obstacles humains.\",\r\n        \"edition\": \"Folio\",\r\n        \"genre\": \"Aventure\",\r\n        \"quantite\": 0,\r\n        \"image\": \"lestravailleursdelamer.png\"\r\n    },\r\n    \"utilisateur\": {\r\n        \"id\": 3,\r\n        \"nom\": \"Bob\",\r\n        \"login\": \"bob@booknook.ca\",\r\n        \"type\": false,\r\n        \"livresFavoris\": []\r\n    },\r\n    \"date_emprunt\": \"2024-02-22\",\r\n    \"date_retour\": \"2024-03-12\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/emprunts",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"emprunts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Modifier un emprunt de Bob",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"livre\": {\r\n        \"isbn\": \"ISBN0001\",\r\n        \"nom\": \"1984\",\r\n        \"auteur\": \"George Orwell\",\r\n        \"resume\": \"Un roman dystopique.\",\r\n        \"edition\": \"Gallimard\",\r\n        \"genre\": \"Dystopie\",\r\n        \"quantite\": 10,\r\n        \"image\": \"1984.png\"\r\n    },\r\n    \"utilisateur\": {\r\n        \"id\":3,\r\n        \"nom\": \"Bob\",\r\n        \"login\": \"bob@booknook.ca\",\r\n        \"type\": false,\r\n        \"livresFavoris\": []\r\n    },\r\n    \"date_emprunt\": \"2024-02-01\",\r\n    \"date_retour\": \"2024-03-22\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/emprunts/31",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"emprunts",
+								"31"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Modifier un emprunt date impossible",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"livre\": {\r\n        \"isbn\": \"ISBN0001\",\r\n        \"nom\": \"1984\",\r\n        \"auteur\": \"George Orwell\",\r\n        \"resume\": \"Un roman dystopique.\",\r\n        \"edition\": \"Gallimard\",\r\n        \"genre\": \"Dystopie\",\r\n        \"quantite\": 10,\r\n        \"image\": \"1984.png\"\r\n    },\r\n    \"utilisateur\": {\r\n        \"id\":3,\r\n        \"nom\": \"Bob\",\r\n        \"login\": \"bob@booknook.ca\",\r\n        \"type\": false,\r\n        \"livresFavoris\": []\r\n    },\r\n    \"date_emprunt\": \"2024-02-01\",\r\n    \"date_retour\": \"2023-01-22\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/emprunts/31",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"emprunts",
+								"31"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consulter les utilisateurs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/utilisateurs",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"utilisateurs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consulter son profil",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/utilisateurs/3",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"utilisateurs",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Modifier un autre utilisateur",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"nom\": \"Bob3\",\r\n        \"login\": \"bob@booknook.ca\",\r\n        \"type\": false,\r\n        \"livresFavoris\": [\r\n        ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/utilisateurs/5",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"utilisateurs",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Modifier son profil",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"nom\": \"Bob\",\r\n        \"login\": \"bob@booknook.ca\",\r\n        \"type\": false,\r\n        \"livresFavoris\": [\r\n            {\r\n                \"isbn\": \"ISBN0010\",\r\n                \"nom\": \"The Catcher in the Rye\",\r\n                \"auteur\": \"J.D. Salinger\",\r\n                \"resume\": \"Un récit d'adolescence.\",\r\n                \"edition\": \"Little, Brown and Company\",\r\n                \"genre\": \"Conte\",\r\n                \"quantite\": 2,\r\n                \"image\": \"the_catcher_in_the_rye.png\"\r\n            }\r\n        ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/utilisateurs/3",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"utilisateurs",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Supprimer un emprunt de Bob",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/emprunts/31",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"emprunts",
+								"31"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Supprimer un emprunt qui n'appartient pas à Bob",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/emprunts/31",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"emprunts",
+								"31"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Supprimer l'admin",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/utilisateurs/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"utilisateurs",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Supprimer le livre",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/livres/ISBN0015",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"livres",
+								"ISBN0015"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "oauth2",
+				"oauth2": [
+					{
+						"key": "clientId",
+						"value": "{{auth0_clientID}}",
+						"type": "string"
+					},
+					{
+						"key": "tokenRequestParams",
+						"value": [
+							{
+								"key": "audience",
+								"value": "https://booknook.crosemont.qc.ca",
+								"enabled": true,
+								"send_as": "request_body"
+							}
+						],
+						"type": "any"
+					},
+					{
+						"key": "scope",
+						"value": "openid",
+						"type": "string"
+					},
+					{
+						"key": "password",
+						"value": "{{auth0_bobMDP}}",
+						"type": "string"
+					},
+					{
+						"key": "username",
+						"value": "{{auth0_bobID}}",
+						"type": "string"
+					},
+					{
+						"key": "clientSecret",
+						"value": "{{auth0_secretID}}",
+						"type": "string"
+					},
+					{
+						"key": "accessTokenUrl",
+						"value": "{{serveur_authentification}}",
+						"type": "string"
+					},
+					{
+						"key": "grant_type",
+						"value": "password_credentials",
+						"type": "string"
+					},
+					{
+						"key": "tokenName",
+						"value": "Service de livraison",
+						"type": "string"
+					},
+					{
+						"key": "addTokenTo",
+						"value": "header",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "Consulter la liste des emprunts de Bob Copy",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/emprunts?nomUtilisateur=bob",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"emprunts"
+							],
+							"query": [
+								{
+									"key": "nomUtilisateur",
+									"value": "bob"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consulter emprunts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/emprunts",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"emprunts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Emprunt de Bob",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/emprunts/16",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"emprunts",
+								"16"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ajouter emprunt pour Bob",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"id\": 32,\r\n        \"livre\": [ \r\n            {\r\n            \"isbn\": \"ISBN003\",\r\n            \"nom\": \"1984\",\r\n            \"auteur\": \"George Orwell\",\r\n            \"resume\": \"Un roman dystopique.\",\r\n            \"edition\": \"Gallimard\",\r\n            \"genre\": \"Dystopie\",\r\n            \"image\": \"test222324.png\",\r\n            \"quantite\": 10\r\n            }\r\n        ],\r\n        \"utilisateur\": {\r\n            \"id\": 3,\r\n            \"nom\": \"Bob\",\r\n            \"type\": false,\r\n            \"listeFavoris\":[]\r\n\r\n        },\r\n        \"date_emprunt\": \"2024-01-11\",\r\n        \"date_retour\": \"2025-02-10\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/emprunts/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"emprunts",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Modifier l'emprunt de Bob",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"livre\": {\r\n        \"isbn\": \"ISBN0001\",\r\n        \"nom\": \"1984\",\r\n        \"auteur\": \"George Orwell\",\r\n        \"resume\": \"Un roman dystopique.\",\r\n        \"edition\": \"Gallimard\",\r\n        \"genre\": \"Dystopie\",\r\n        \"quantite\": 10,\r\n        \"image\": \"1984.png\"\r\n    },\r\n    \"utilisateur\": {\r\n        \"id\":3,\r\n        \"nom\": \"Bob\",\r\n        \"login\": \"bob@booknook.ca\",\r\n        \"type\": false,\r\n        \"livresFavoris\": []\r\n    },\r\n    \"date_emprunt\": \"2024-02-01\",\r\n    \"date_retour\": \"2024-06-22\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/emprunts/32",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"emprunts",
+								"32"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Supprimer l'emprunt",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/emprunts/32",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"emprunts",
+								"32"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consulter les utilisateurs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/utilisateurs",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"utilisateurs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ajouter un utilisateur Test",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"nom\": \"Alice\",\r\n        \"login\": \"alice@booknook.ca\",\r\n        \"type\": false,\r\n        \"livresFavoris\": []\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/utilisateurs",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"utilisateurs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Modifier l'utilisateur Test",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"nom\": \"Test2\",\r\n        \"login\":\"test@booknook.ca\",\r\n        \"type\": false,\r\n        \"livresFavoris\": [\r\n        ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/utilisateurs/16",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"utilisateurs",
+								"16"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Supprimer l'utilisateur Test",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/utilisateurs/16",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"utilisateurs",
+								"16"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consulter les livres",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/livres",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"livres"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ajouter un livre",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"isbn\": \"ISBN9999\",\r\n        \"nom\": \"Allo\",\r\n        \"auteur\": \"test\",\r\n        \"resume\": \"test\",\r\n        \"edition\": \"test\",\r\n        \"genre\": \"test\",\r\n        \"quantite\": 5,\r\n        \"image\": \"test.png\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/livres",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"livres"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Modifier un livre",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"isbn\": \"ISBN9999\",\r\n        \"nom\": \"Test\",\r\n        \"auteur\": \"test\",\r\n        \"resume\": \"test\",\r\n        \"edition\": \"test\",\r\n        \"genre\": \"test\",\r\n        \"quantite\": 5,\r\n        \"image\": \"test.png\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/livres/ISBN9999",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"livres",
+								"ISBN9999"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Supprimer le livre",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/livres/ISBN9999",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"livres",
+								"ISBN9999"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "oauth2",
+				"oauth2": [
+					{
+						"key": "tokenRequestParams",
+						"value": [
+							{
+								"key": "audience",
+								"value": "https://booknook.crosemont.qc.ca",
+								"enabled": true,
+								"send_as": "request_body"
+							}
+						],
+						"type": "any"
+					},
+					{
+						"key": "scope",
+						"value": "openid",
+						"type": "string"
+					},
+					{
+						"key": "password",
+						"value": "{{auth0_adminMDP}}",
+						"type": "string"
+					},
+					{
+						"key": "username",
+						"value": "{{auth0_adminID}}",
+						"type": "string"
+					},
+					{
+						"key": "clientSecret",
+						"value": "{{auth0_secretID}}",
+						"type": "string"
+					},
+					{
+						"key": "clientId",
+						"value": "{{auth0_clientID}}",
+						"type": "string"
+					},
+					{
+						"key": "accessTokenUrl",
+						"value": "{{serveur_authentification}}",
+						"type": "string"
+					},
+					{
+						"key": "grant_type",
+						"value": "password_credentials",
+						"type": "string"
+					},
+					{
+						"key": "tokenName",
+						"value": "Service de livraison",
+						"type": "string"
+					},
+					{
+						"key": "addTokenTo",
+						"value": "header",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "oauth2",
+		"oauth2": [
+			{
+				"key": "tokenRequestParams",
+				"value": [
+					{
+						"key": "audience",
+						"value": "https://booknook.crosemont.qc.ca",
+						"enabled": true,
+						"send_as": "request_body"
+					}
+				],
+				"type": "any"
+			},
+			{
+				"key": "clientSecret",
+				"value": "kNCSkiHOJ29ZURLZgNoj3VsukVOZfq7u0fjUCIJ3PpezflCplFt2OG_j1eZWRy8r",
+				"type": "string"
+			},
+			{
+				"key": "clientId",
+				"value": "NnmY9En3PZqm1lCDoNtHhZGOHq7XbLmE",
+				"type": "string"
+			},
+			{
+				"key": "accessTokenUrl",
+				"value": "https://dev-hjwmqrawsq7gvb1k.ca.auth0.com/oauth/token",
+				"type": "string"
+			},
+			{
+				"key": "grant_type",
+				"value": "client_credentials",
+				"type": "string"
+			},
+			{
+				"key": "tokenName",
+				"value": "Service de livraison",
+				"type": "string"
+			},
+			{
+				"key": "addTokenTo",
+				"value": "header",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "audience",
+			"value": "https://booknook.crosemont.qc.ca",
+			"type": "string"
+		},
+		{
+			"key": "serveur_authentification",
+			"value": "https://dev-hjwmqrawsq7gvb1k.ca.auth0.com/oauth/token",
+			"type": "string"
+		},
+		{
+			"key": "auth0_clientID",
+			"value": "NnmY9En3PZqm1lCDoNtHhZGOHq7XbLmE",
+			"type": "string"
+		},
+		{
+			"key": "auth0_secretID",
+			"value": "kNCSkiHOJ29ZURLZgNoj3VsukVOZfq7u0fjUCIJ3PpezflCplFt2OG_j1eZWRy8r",
+			"type": "string"
+		},
+		{
+			"key": "auth0_bobID",
+			"value": "bob@booknook.ca",
+			"type": "string"
+		},
+		{
+			"key": "auth0_bobMDP",
+			"value": "Password1234",
+			"type": "string"
+		},
+		{
+			"key": "url",
+			"value": "http://idefix.dti.crosemont.quebec:9001",
+			"type": "string"
+		},
+		{
+			"key": "auth0_adminID",
+			"value": "admin@booknook.qc.ca",
+			"type": "string"
+		},
+		{
+			"key": "auth0_adminMDP",
+			"value": "Password1234",
+			"type": "string"
+		},
+		{
+			"key": "serve",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "serveur",
+			"value": "",
+			"type": "default"
+		}
+	]
+}
